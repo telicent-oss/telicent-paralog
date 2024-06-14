@@ -1,0 +1,35 @@
+export const prefixObj = {
+  rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+  rdfs: 'http://www.w3.org/2000/01/rdf-schema#',
+  owl: 'http://www.w3.org/2002/07/owl#',
+  xsd: 'http://www.w3.org/2001/XMLSchema#',
+  dct: 'http://purl.org/dc/terms/',
+  ies: 'http://ies.example.com/ontology/ies#',
+  iso8601: 'http://iso.org/iso8601#',
+  hasIes: 'http://has.data.gov.uk/has-ies-test#',
+  itu: 'http://itu.int#',
+  imo: 'http://imo.org#',
+  wow: 'http://telicent.io/test-data/wow#',
+  osgr: 'http://ordnancesurvey.co.uk/gridRef#',
+  osg: 'http://ordnancesurvey.co.uk/grid#',
+  tfd: 'http://telicent.io/fake_data#',
+  iso3166: 'http://iso.org/iso3166Alpha3#'
+};
+
+export const prefixLookup = {
+  'http://iso.org/iso3166Alpha3': 'iso3166:',
+  'http://telicent.io/fake_data' :'tfd:',
+  'http://ordnancesurvey.co.uk/gridRef': 'osgr:',
+  'http://ordnancesurvey.co.uk/grid': 'osg:',
+  'http://telicent.io/test-data/wow': 'wow:',
+  'http://imo.org': 'imo:',
+  'http://itu.int': 'itu:',
+  'http://www.w3.org/1999/02/22-rdf-syntax-ns': 'rdf:',
+  'http://www.w3.org/2000/01/rdf-schema': 'rdfs:',
+  'http://www.w3.org/2002/07/owl': 'owl:',
+  'http://www.w3.org/2001/XMLSchema': 'xsd:',
+  'http://purl.org/dc/terms/': 'dct:',
+  'http://ies.example.com/ontology/ies': 'ies:',
+  'http://iso.org/iso8601': 'iso:',
+  'http://has.data.gov.uk/has-ies-test': 'has:',
+};

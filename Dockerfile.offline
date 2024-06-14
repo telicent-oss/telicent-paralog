@@ -1,0 +1,18 @@
+ARG APP_NAME
+ARG BASE_IMAGE=nginx:stable-alpine
+FROM ${BASE_IMAGE} as build
+
+
+
+RUN apk update && apk add curl 
+RUN curl -XGET https://api.tiles.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css -o mapbox-gl.css
+RUN sed -i "s/https:\/\/api.tiles.mapbox.com\/mapbox-gl-js\/v2.2.0/\/paralog/g" /app/build/index.html
+FROM nginxinc/nginx-unprivileged:stable-alpine
+COPY --from=build /app/build /usr/share/nginx/html/paralog
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
+WORKDIR /usr/share/nginx/html/paralog
+COPY instance.sbom.json /opt/telicent/sbom/sbom.json
+
+EXPOSE 8080
+
+CMD ["nginx", "-g", "daemon off;"]

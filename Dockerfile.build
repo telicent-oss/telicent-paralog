@@ -1,0 +1,19 @@
+FROM node:20-alpine as installation 
+
+WORKDIR /app
+ARG NPM_TOKEN
+ENV PATH /app/node_modules/.bin:$PATH
+
+COPY package.json yarn.lock ./
+RUN npm config set fetch-timeout 600000
+RUN LOCAL_MACHINE=false yarn install --frozen-lockfile --production --network-concurrency 1
+
+FROM installation as build
+
+ADD src src
+ADD public public
+COPY craco.config.js .
+COPY jsconfig.json .
+COPY tailwind.config.js .
+RUN yarn build:tailwind
+RUN GENERATE_SOURCEMAP=false yarn build 

@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -e
+# Ear-marked to mv to @telicent-oss/telicent-frontend-cli
+# Check if the container exists and remove it if it does
+if [ "$(docker ps -a -q -f name=telicent-paralog-offline-local-running)" ]; then
+    docker rm -f telicent-paralog-offline-local-running
+fi
+
+docker images | grep telicent-paralog-offline-local
+
+# Run the Docker container
+docker run -p 8080:8080 --user 0:0 --name telicent-paralog-offline-local-running telicent-paralog-offline-local
+

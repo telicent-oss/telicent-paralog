@@ -1,0 +1,37 @@
+# #!/usr/bin/env bash
+set -e
+pwd
+trap 'rm -f ./instance.sbom.json' EXIT
+echo '{}' > ./instance.sbom.json
+
+echo "Found .npmrc at: $npmrc_path"
+
+NPM_TOKEN=$(UNMASK=true yarn --silent tefe npmrc-authtoken //npm.pkg.github.com/)
+
+if [[ -z "$NPM_TOKEN" ]]; then
+  echo "Necessary tokens not found in .npmrc, cannot proceed with build."
+  exit 1
+fi
+
+# Modify Docker build to use tokens
+# To debug it helps to use:  --no-cache \
+
+
+
+docker build \
+    --progress=plain \
+    -f Dockerfile.build \
+    --build-arg NPM_TOKEN="$NPM_TOKEN" \
+    -t telicent-paralog-intermediate \
+    --load . \
+    && \
+    docker build \
+    --no-cache \
+    --progress=plain \
+    -f Dockerfile.offline \
+    --build-arg BASE_IMAGE=telicent-paralog-intermediate \
+    --build-arg APP_NAME=telicent-paralog \
+    -t telicent-paralog-offline-local \
+    --load . \
+    && \
+    docker images | grep telicent-paralog-offline-local

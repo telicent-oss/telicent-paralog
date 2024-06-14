@@ -1,0 +1,9 @@
+{
+    "name": "Paralog app",
+    "repo_name": "telicent-paralog",
+    "image_name": "telicent-paralog",
+    "app_name": "paralog",
+    "app_name_snake_case": "paralog_app",
+    "uri-basename": "paralog",
+    "brandColor": "#3B4FD1"
+  }
