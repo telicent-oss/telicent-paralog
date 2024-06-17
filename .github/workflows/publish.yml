@@ -125,12 +125,3 @@ jobs:
         APP_NAME=${{ needs.prepare.outputs.app_name }}
         BASE_IMAGE=telicent/${{ needs.prepare.outputs.image_name }}-build:${{ needs.prepare.outputs.semver }}-build
     secrets: inherit
-
-  trigger_owasp_dependency_check-api:
-    needs:
-      - prepare
-      - publish_deployment_image_to_registries
-    uses: Telicent-oss/shared-workflow/.github/workflows/dependency_tracking.yml@main
-    secrets: inherit
-    with:
-      APP_NAME: ${{ needs.prepare.outputs.app_name }}
