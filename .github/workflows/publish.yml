@@ -86,7 +86,6 @@ jobs:
       DOCKERFILE: Dockerfile.build
       PATH: .
       VERSION: ${{ needs.prepare.outputs.semver }}
-      ECR_SUFFIX: -build
       ALLOW_MUTABLE_TAGS: false
     secrets: inherit
 
@@ -102,7 +101,6 @@ jobs:
       PATH: .
       VERSION: ${{ needs.prepare.outputs.semver }}
       VERSION_SUFFIX: -offline
-      ECR_SUFFIX: -offline
       ALLOW_MUTABLE_TAGS: false
       BUILD_ARGS: |
         APP_NAME=${{ needs.prepare.outputs.app_name }}
