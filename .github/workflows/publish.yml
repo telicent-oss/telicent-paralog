@@ -80,7 +80,7 @@ jobs:
     needs:
       - prepare
       - integrated_tests
-    uses: telicent-oss/shared-workflows/.github/workflows/push-to-registries.yml@main
+    uses: telicent-oss/shared-workflows/.github/workflows/docker-push-to-registries.yml@main
     with:
       APP_NAME: ${{ needs.prepare.outputs.app_name }}
       DOCKERFILE: Dockerfile.build
@@ -95,7 +95,7 @@ jobs:
       - prepare
       - integrated_tests
       - publish_build_image_to_registries
-    uses: Telicent-oss/shared-workflows/.github/workflows/push-to-registries.yml@main
+    uses: Telicent-oss/shared-workflows/.github/workflows/docker-push-to-registries.yml@main
     with:
       APP_NAME: ${{ needs.prepare.outputs.app_name }}
       DOCKERFILE: Dockerfile.offline
@@ -114,7 +114,7 @@ jobs:
       - prepare
       - integrated_tests
       - publish_build_image_to_registries
-    uses: Telicent-oss/shared-workflows/.github/workflows/push-to-registries.yml@main
+    uses: Telicent-oss/shared-workflows/.github/workflows/docker-push-to-registries.yml@main
     with:
       APP_NAME: ${{ needs.prepare.outputs.app_name }}
       DOCKERFILE: Dockerfile
