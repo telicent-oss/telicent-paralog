@@ -71,7 +71,7 @@ jobs:
     needs:
       - prepare
       - integrated_tests
-    uses: Telicent-oss/shared-workflow/.github/workflows/vulnerability-scanning-on-repo.yml@main
+    uses: telicent-oss/shared-workflows/.github/workflows/vulnerability-scanning-on-repo.yml@main
     with:
       APP_NAME: ${{ needs.prepare.outputs.app_name }}
     secrets: inherit
@@ -80,14 +80,12 @@ jobs:
     needs:
       - prepare
       - integrated_tests
-    uses: Telicent-oss/shared-workflow/.github/workflows/push-to-registries.yml@main
+    uses: telicent-oss/shared-workflows/.github/workflows/docker-push-to-registries.yml@main
     with:
       APP_NAME: ${{ needs.prepare.outputs.app_name }}
       DOCKERFILE: Dockerfile.build
       PATH: .
       VERSION: ${{ needs.prepare.outputs.semver }}
-      ECR_SUFFIX: -build
-      ALLOW_MUTABLE_TAGS: false
     secrets: inherit
 
   publish_offline_image_to_registries:
@@ -95,15 +93,13 @@ jobs:
       - prepare
       - integrated_tests
       - publish_build_image_to_registries
-    uses: Telicent-oss/shared-workflow/.github/workflows/push-to-registries.yml@main
+    uses: Telicent-oss/shared-workflows/.github/workflows/docker-push-to-registries.yml@main
     with:
       APP_NAME: ${{ needs.prepare.outputs.app_name }}
       DOCKERFILE: Dockerfile.offline
       PATH: .
       VERSION: ${{ needs.prepare.outputs.semver }}
       VERSION_SUFFIX: -offline
-      ECR_SUFFIX: -offline
-      ALLOW_MUTABLE_TAGS: false
       BUILD_ARGS: |
         APP_NAME=${{ needs.prepare.outputs.app_name }}
         BASE_IMAGE=telicent/${{ needs.prepare.outputs.image_name }}-build:${{ needs.prepare.outputs.semver }}-build
@@ -114,23 +110,13 @@ jobs:
       - prepare
       - integrated_tests
       - publish_build_image_to_registries
-    uses: Telicent-oss/shared-workflow/.github/workflows/push-to-registries.yml@main
+    uses: Telicent-oss/shared-workflows/.github/workflows/docker-push-to-registries.yml@main
     with:
       APP_NAME: ${{ needs.prepare.outputs.app_name }}
       DOCKERFILE: Dockerfile
       PATH: .
       VERSION: ${{ needs.prepare.outputs.semver }}
-      ALLOW_MUTABLE_TAGS: false
       BUILD_ARGS: |
         APP_NAME=${{ needs.prepare.outputs.app_name }}
         BASE_IMAGE=telicent/${{ needs.prepare.outputs.image_name }}-build:${{ needs.prepare.outputs.semver }}-build
     secrets: inherit
-
-  trigger_owasp_dependency_check-api:
-    needs:
-      - prepare
-      - publish_deployment_image_to_registries
-    uses: Telicent-oss/shared-workflow/.github/workflows/dependency_tracking.yml@main
-    secrets: inherit
-    with:
-      APP_NAME: ${{ needs.prepare.outputs.app_name }}
