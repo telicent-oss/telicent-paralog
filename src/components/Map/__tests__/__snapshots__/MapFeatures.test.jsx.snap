@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Map component should generate linear asset features 1`] = `
+Array [
+  Object {
+    "geometry": Object {
+      "coordinates": Array [
+        Array [
+          2.90952,
+          1.35815,
+        ],
+        Array [
+          3.58275,
+          2.62053,
+        ],
+        Array [
+          5.40952,
+          5.35815,
+        ],
+        Array [
+          6.91228,
+          6.35815,
+        ],
+        Array [
+          7.91228,
+          7.35815,
+        ],
+        Array [
+          -8.53063,
+          8.35815,
+        ],
+      ],
+      "type": "LineString",
+    },
+    "properties": Object {
+      "criticality": 1234,
+      "id": "T043",
+      "lineColor": "#7C7C7C",
+      "selected": false,
+      "uri": "https://www.example.com/Instruments#T043",
+    },
+    "type": "Feature",
+  },
+]
+`;

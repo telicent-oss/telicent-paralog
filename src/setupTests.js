@@ -7,19 +7,19 @@ import "jest-canvas-mock";
 import { configure } from "@testing-library/react";
 import { toMatchImageSnapshot } from "jest-image-snapshot";
 
-// import server from "./mocks";
+import server from "./mocks";
 
 expect.extend({ toMatchImageSnapshot });
 configure({ testIdAttribute: "id" });
 global.ResizeObserver = require("resize-observer-polyfill");
 
-// beforeAll(() => server.listen());
-// beforeEach(() => {
-//   server.resetHandlers();
-//   jest.restoreAllMocks();
-//   window.localStorage.clear();
-// });
-// afterAll(() => server.close());
+beforeAll(() => server.listen());
+beforeEach(() => {
+  server.resetHandlers();
+  jest.restoreAllMocks();
+  window.localStorage.clear();
+});
+afterAll(() => server.close());
 
 jest.mock("react-map-gl", () => ({
   __esModule: true,

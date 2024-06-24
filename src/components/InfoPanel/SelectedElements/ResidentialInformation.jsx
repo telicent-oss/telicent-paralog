@@ -78,7 +78,7 @@ const Addresses = ({ residences, isLoading, isError, error }) => {
       </ul>
       {residences.length > LIMIT && (
         <button className="text-sm" onClick={() => setShowAll((prev) => !prev)}>
-          {showAll ? "show less addresses" : "show all addresses"}
+          {showAll ? "show fewer addresses" : "show all addresses"}
         </button>
       )}
     </>

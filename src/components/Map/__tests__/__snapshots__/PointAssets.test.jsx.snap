@@ -1,0 +1,138 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Point asset component should NOT generate features for selected elements which don't exist 1`] = `
+Array [
+  Object {
+    "geometry": Object {
+      "coordinates": Array [
+        -1231231,
+        1.111111,
+      ],
+      "type": "Point",
+    },
+    "properties": Object {
+      "criticality": 2,
+      "id": "E003",
+      "type": "http://ies.example.com/ontology/ies#LargeWindFarm",
+      "uri": "https://www.example.com/Instruments#E003",
+    },
+    "type": "Feature",
+  },
+  Object {
+    "geometry": Object {
+      "coordinates": Array [
+        100.098765,
+        1.555555,
+      ],
+      "type": "Point",
+    },
+    "properties": Object {
+      "criticality": 2,
+      "id": "E025",
+      "type": "http://ies.example.com/ontology/ies#LargeWindFarm",
+      "uri": "https://www.example.com/Instruments#E025",
+    },
+    "type": "Feature",
+  },
+]
+`;
+
+exports[`Point asset component should generate asset features 1`] = `
+Array [
+  Object {
+    "geometry": Object {
+      "coordinates": Array [
+        -1231231,
+        1.111111,
+      ],
+      "type": "Point",
+    },
+    "properties": Object {
+      "criticality": 2,
+      "id": "E003",
+      "type": "http://ies.example.com/ontology/ies#LargeWindFarm",
+      "uri": "https://www.example.com/Instruments#E003",
+    },
+    "type": "Feature",
+  },
+  Object {
+    "geometry": Object {
+      "coordinates": Array [
+        10.1233333,
+        100.123123,
+      ],
+      "type": "Point",
+    },
+    "properties": Object {
+      "criticality": 1,
+      "id": "E001",
+      "type": "http://ies.example.com/ontology/ies#CoalPlantComplex",
+      "uri": "https://www.example.com/Instruments#E001",
+    },
+    "type": "Feature",
+  },
+]
+`;
+
+exports[`Point asset component should generate dependency features 1`] = `
+Array [
+  Object {
+    "geometry": Object {
+      "coordinates": Array [
+        Array [
+          10.1233333,
+          100.123123,
+        ],
+        Array [
+          -1231231,
+          1.111111,
+        ],
+      ],
+      "type": "LineString",
+    },
+    "properties": Object {
+      "criticality": 2,
+      "dependent": "https://www.example.com/Instruments#E001",
+      "id": "E001 - E003",
+      "lineColor": "#ffb60a",
+      "lineOpacity": 0.3,
+      "provider": "https://www.example.com/Instruments#E003",
+      "selected": false,
+      "uri": "https://www.example.com/Instruments#_E001_E003_dependency",
+    },
+    "type": "Feature",
+  },
+  Object {
+    "geometry": Object {
+      "coordinates": Array [
+        -1231231,
+        1.111111,
+      ],
+      "type": "Point",
+    },
+    "properties": Object {
+      "criticality": 2,
+      "id": "E003",
+      "type": "http://ies.example.com/ontology/ies#LargeWindFarm",
+      "uri": "https://www.example.com/Instruments#E003",
+    },
+    "type": "Feature",
+  },
+  Object {
+    "geometry": Object {
+      "coordinates": Array [
+        10.1233333,
+        100.123123,
+      ],
+      "type": "Point",
+    },
+    "properties": Object {
+      "criticality": 1,
+      "id": "E001",
+      "type": "http://ies.example.com/ontology/ies#CoalPlantComplex",
+      "uri": "https://www.example.com/Instruments#E001",
+    },
+    "type": "Feature",
+  },
+]
+`;

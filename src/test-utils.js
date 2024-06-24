@@ -16,8 +16,8 @@ const user = userEvent.setup();
 
 const ontologyService = new OntologyService(config.services.ontology, "/ontology");
 
-export const clickLowVoltageElectricity = async () => {
-  await user.click(screen.getByRole("button", { name: /Electrical power distribution complex/i }));
+export const clickSmallWindFarm = async () => {
+  await user.click(screen.getByRole("button", { name: /Green grid/i }));
   await user.click(await screen.findByRole("checkbox", { name: "Energy [25]" }));
   expect(screen.getByRole("checkbox", { name: "Energy [25]" })).toBeChecked();
 };
