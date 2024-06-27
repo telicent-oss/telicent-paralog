@@ -18,10 +18,10 @@ const FloodWarningWidget = () => {
       </button>
       <iframe
         id="flood-warnings-iframe"
-        title="Flood warnings in Isle of Wight"
+        title="Flood warnings in Kangaroo Island"
         width={isOpen ? "355px" : "0px"}
         height="152px"
-        src={`https://environment.data.gov.uk/flood-widgets/widgets/widget-IsleofWight-horizontal.html`}
+        src={`https://environment.data.gov.uk/flood-widgets/widgets/widget-KangarooIsland-horizontal.html`}
         className={classNames("flood-warning-widget__iframe", {
           "opacity-0": !isOpen,
           "opacity-100": isOpen,

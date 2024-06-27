@@ -23,7 +23,7 @@ export const fetchFloodAreaPolygon = async (polygonUri) => {
 
   if (!response.ok) {
     throw new Error(
-      data?.detail || `An error occured while retrieving polygon ${polygonUri}`
+      data?.detail || `An error occurred while retrieving polygon ${polygonUri}`
     );
   }
   return data;

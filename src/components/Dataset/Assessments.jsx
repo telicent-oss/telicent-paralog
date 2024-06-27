@@ -16,7 +16,7 @@ const Assessments = () => {
   if (isError)
     return (
       <p>
-        An error occured while retrieving assessments. Please try again. If problem persists contact
+        An error occurred while retrieving assessments. Please try again. If problem persists contact
         admin
       </p>
     );

@@ -22,7 +22,7 @@ export const fetchAssetTypes = async (assessment) => {
 
   if (!response.ok) {
     throw new Error(
-      `An error occured while retrieving data types for ${assessment}`
+      `An error occurred while retrieving data types for ${assessment}`
     );
   }
 
@@ -43,7 +43,7 @@ export const fetchAssessmentAssets = async (assessment, types) => {
 
   if (!response.ok) {
     throw new Error(
-      `An error occured while retrieving assets for assessment ${assessment} and types ${types.toString()}`
+      `An error occurred while retrieving assets for assessment ${assessment} and types ${types.toString()}`
     );
   }
 
@@ -64,7 +64,7 @@ export const fetchAssessmentDependencies = async (assessment, types) => {
 
   if (!response.ok) {
     throw new Error(
-      `An error occured while retrieving dependencies for assessment ${assessment} and types ${typeParams.toString()}`
+      `An error occurred while retrieving dependencies for assessment ${assessment} and types ${typeParams.toString()}`
     );
   }
 

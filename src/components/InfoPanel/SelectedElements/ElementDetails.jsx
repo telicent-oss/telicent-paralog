@@ -39,7 +39,7 @@ const ElementDetails = ({ element, expand, onViewDetails }) => {
   const isError = assetInfo.isError || dependentInfo.isError || providerInfo.isError;
 
   if (isLoading) return <p>Fetching element details</p>;
-  if (isError) return <p>An error has occured while fetching information for {element.uri}</p>;
+  if (isError) return <p>An error has occurred while fetching information for {element.uri}</p>;
 
   let details = undefined;
   if (elemIsAsset) details = element.getDetails(assetInfo.data);
