@@ -132,3 +132,5 @@ __image_snapshots__
 
 # VSCode
 .vscode
+
+*.gitignored.*

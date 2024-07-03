@@ -30,6 +30,8 @@ const config = {
 };
 
 if (!OFFLINE_MODE && !env?.MAP_TILER_TOKEN) {
+
+  
   const errorMessage = `
   <strong>PROBLEM</strong>: Paralog needs <strong>MAP_TILER_TOKEN</strong> to be set!
 
@@ -84,6 +86,7 @@ if (!OFFLINE_MODE && !env?.MAP_TILER_TOKEN) {
 `;
 
   document.head.appendChild(styleElement);
-  throw new Error(errorMessage);
+  const devInfo = Object.keys(env).filter(val => /^[A-Z]+(_[A-Z]+)*$/.test(val))
+  throw new Error(errorMessage + devInfo);
 }
 export default config;
