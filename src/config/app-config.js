@@ -1,4 +1,4 @@
-const env = window._env_;
+const env = window;
 
 const OFFLINE_ENABLED =
   env?.OFFLINE_STYLES &&

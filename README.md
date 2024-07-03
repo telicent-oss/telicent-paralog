@@ -10,16 +10,17 @@ quickly.
 
 ### Contents
 
-- [Build](#build)
-- [Usage](#usage)
+- [Getting started](#getting-started)
 - [Features](#features)
 - [Related repositories](#related-repositories)
 
-## Build
+## Getting started
 
-Run `yarn build` to build the application.
+### Prerequisite
 
-## Usage
+Refer to [Smart Cache Paralog API
+documentation](https://github.com/telicent-oss/smart-cache-paralog-api/blob/main/README.md)
+and ensure the Smart Cache is running prior to starting the frontend application
 
 1. Run `yarn install` to install dependencies
 2. Run `yarn start` to start the application
