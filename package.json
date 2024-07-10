@@ -44,7 +44,7 @@
   },
   "scripts": {
     "start": "PORT=3001 craco start",
-    "prestart": "./scripts/cp-eng-config.js.sh",
+    "prestart": "[ \"$LOCAL_MACHINE\" = \"false\" ] && echo 'skip cp-config' || ./scripts/cp-config.js.sh",
     "build": "craco build",
     "build:tailwind": "npx tailwindcss -i ./src/index.css -o ./src/main.css",
     "babel": "babel --plugins @babel/plugin-transform-arrow-functions script.js",

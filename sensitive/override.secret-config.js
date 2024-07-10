@@ -1,0 +1,1 @@
+window.MAP_TILER_TOKEN=""
