@@ -23,7 +23,17 @@ documentation](https://github.com/telicent-oss/smart-cache-paralog-api/blob/main
 and ensure the Smart Cache is running prior to starting the frontend application
 
 1. Run `yarn install` to install dependencies
-2. Run `yarn start` to start the application
+2. Create custom config (Optional) - **Default Config:** can be found in `override.env-config.js`
+- Run: 
+  ```sh
+  cd <projectRoot>
+  cp ./override.env-config.js env-config.js
+  cp ./sensitive/override.secret-config.js ./sensitive/secret-config.js # encrypted until runtime
+  ```
+- Edit: `env-config.js` and `sensitive/secret-config.js`(_gitignored_)
+  > **Note:** In local, these files are copied to `./public`
+3. Run `yarn start` to start the application
+
 
 ## Features
 

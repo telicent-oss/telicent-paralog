@@ -134,3 +134,6 @@ __image_snapshots__
 .vscode
 
 *.gitignored.*
+
+env-config.js
+secret-config.js
