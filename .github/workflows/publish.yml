@@ -71,7 +71,7 @@ jobs:
     needs:
       - prepare
       - integrated_tests
-    uses: telicent-oss/shared-workflows/.github/workflows/vulnerability-scanning-on-repo.yml@main
+    uses: telicent-oss/shared-workflows/.github/workflows/vulnerability-scanning-on-repo.yml@TELFE-211/scan-secrets
     with:
       APP_NAME: ${{ needs.prepare.outputs.app_name }}
     secrets: inherit
@@ -80,7 +80,7 @@ jobs:
     needs:
       - prepare
       - integrated_tests
-    uses: telicent-oss/shared-workflows/.github/workflows/docker-push-to-registries.yml@main
+    uses: telicent-oss/shared-workflows/.github/workflows/docker-push-to-registries.yml@TELFE-211/scan-secrets
     with:
       APP_NAME: ${{ needs.prepare.outputs.app_name }}
       DOCKERFILE: Dockerfile.build
@@ -93,7 +93,7 @@ jobs:
       - prepare
       - integrated_tests
       - publish_build_image_to_registries
-    uses: Telicent-oss/shared-workflows/.github/workflows/docker-push-to-registries.yml@main
+    uses: Telicent-oss/shared-workflows/.github/workflows/docker-push-to-registries.yml@TELFE-211/scan-secrets
     with:
       APP_NAME: ${{ needs.prepare.outputs.app_name }}
       DOCKERFILE: Dockerfile.offline
@@ -110,7 +110,7 @@ jobs:
       - prepare
       - integrated_tests
       - publish_build_image_to_registries
-    uses: Telicent-oss/shared-workflows/.github/workflows/docker-push-to-registries.yml@main
+    uses: Telicent-oss/shared-workflows/.github/workflows/docker-push-to-registries.yml@TELFE-211/scan-secrets
     with:
       APP_NAME: ${{ needs.prepare.outputs.app_name }}
       DOCKERFILE: Dockerfile
