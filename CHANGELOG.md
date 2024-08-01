@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/telicent-oss/telicent-paralog/compare/v1.0.0...v1.1.0) (2024-08-01)
+
+
+### Features
+
+* **secret-config:** added as separate file ([28188ef](https://github.com/telicent-oss/telicent-paralog/commit/28188efd37edfbe9b33e728d2ee12a285371c70f))
+
+
+### Bug Fixes
+
+* **Trivy:** [TELFE-382] issue and tests ([99b929c](https://github.com/telicent-oss/telicent-paralog/commit/99b929c491064d8819994546c052387449f17f9f))
+
 ## 1.0.0 (2024-06-27)
 
 
