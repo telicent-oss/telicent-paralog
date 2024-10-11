@@ -3,10 +3,9 @@
 **Paralog is a free, open source web application used to evaluate high value
 assets**
 
-Paralog is a tool which can be used to get a better understanding of high value
-assets within regions in the UK. It allows analysts to better understand the
-impact of high value assets which in turn allows them to make better decisions
-quickly.
+Provides a visualisation of regional infrastructure to:
+1. help analyse degradation impacts
+2. speed up recovery planning
 
 ### Contents
 
