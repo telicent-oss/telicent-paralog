@@ -107,7 +107,11 @@
     "webpack-dev-middleware": "5.3.4",
     "webpack": "5.76.0",
     "// ws ": "Found \"jsdom#ws@7.5.9\" jest-config#jest-environment-jsdom#jsdom - not worried as its just tests",
-    "ws": "8.17.1"
+    "ws": "8.17.1",
+    "react-scripts/**/semver": "7.5.2",
+    "@commitlint/**/semver": "7.5.2",
+    "@telicent-oss/**/semver": "7.5.2",
+    "react-app-rewired/**/semver": "5.7.2"
   },
   "config": {
     "commitizen": {
