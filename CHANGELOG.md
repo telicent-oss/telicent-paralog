@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/telicent-oss/telicent-paralog/compare/v1.1.0...v1.2.0) (2025-03-14)
+
+
+### Features
+
+* new licence terms ([4cba53f](https://github.com/telicent-oss/telicent-paralog/commit/4cba53f6ab316e7e073d9bdc9dfa949a2454926c))
+
 ## [1.1.0](https://github.com/telicent-oss/telicent-paralog/compare/v1.0.0...v1.1.0) (2024-08-01)
 
 
