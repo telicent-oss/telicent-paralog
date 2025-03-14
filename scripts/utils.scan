@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+set -e
+
+image="$1"
+
+[ -f image-SBOM.gitignored.json ] && rm image-SBOM.gitignored.json
+
+# Check if syft is installed
+if ! command -v syft &>/dev/null; then
+  echo "Please install syft before running."
+  echo " - macOS: brew install syft"
+fi
+# TODO: Enable. Get perm issues. Can't id sane alt.
+# if brew outdated syft; then
+#   echo "Error: syft is out of date."
+#   echo "ACTION REQUIRED:"
+#   echo "     brew update && brew upgrade syft"
+# fi
+
+# Check if grype is installed
+if ! command -v grype &>/dev/null; then
+  echo "Please install grype before running."
+  echo " - macOS: brew install grype"
+fi
+# TODO: Enable. Get perm issues. Can't id sane alt.
+# if brew outdated grype; then
+#   echo "Error: grype is out of date."
+#   echo "ACTION REQUIRED:"
+#   echo "     brew update && brew upgrade grype"
+# fi
+
+# Check if trivy is installed
+if ! command -v trivy &>/dev/null; then
+  echo "Please install Trivy before running."
+  echo " - Ubuntu: sudo apt-get update && sudo apt-get install -y trivy"
+  echo " - macOS: brew install aquasecurity/trivy/trivy"
+  echo " - Windows: scoop install trivy"
+fi
+
+echo "Scanning $image..."
+
+# Scan with grype
+syft "$image" -o json | grype --only-fixed --quiet --fail-on high;
+
+
+
+# Scan with trivy image
+trivy image  --format table \
+  --exit-code 1 \
+  --ignore-unfixed \
+  --pkg-types  os,library \
+  --severity HIGH,CRITICAL \
+  "$image";
+
+# Scan with trivy image with cyclonedx
+# generates SBOM for entire image (OS, libraries, etc.) in CycloneDX format...
+trivy image --format cyclonedx \
+  --exit-code 0 \
+  --pkg-types os,library \
+  --severity HIGH,CRITICAL \
+  --output image-SBOM.gitignored.json \
+  --scanners vuln \
+  "$image";
+#... and then scans that SBOM for vulnerabilities
+trivy sbom \
+  --ignore-unfixed \
+  --format table \
+  --exit-code 1 \
+  --pkg-types os,library \
+  --scanners vuln \
+  --severity HIGH,CRITICAL \
+  image-SBOM.gitignored.json;
+
+# CycloneDX NPM
+# Uses cyclonedx-npm to generate an SBOM specifically for npm dependencies...
+npx @cyclonedx/cyclonedx-npm \
+  --ignore-npm-errors \
+  --output-file .test-vuln.sbom.gitignored.json &&
+  # ..and then scans that SBOM
+  trivy sbom \
+    --format table \
+    --exit-code 0 \
+    --ignore-unfixed \
+    --scanners vuln \
+    --severity HIGH,CRITICAL \
+    .test-vuln.sbom.gitignored.json

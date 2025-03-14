@@ -47,6 +47,7 @@
     "prestart": "[ \"$LOCAL_MACHINE\" = \"false\" ] && echo 'skip cp-config' || ./scripts/cp-config.js.sh",
     "build": "craco build",
     "build:tailwind": "npx tailwindcss -i ./src/index.css -o ./src/main.css",
+    "postbuild": "[ \"$LOCAL_MACHINE\" = \"false\" ] && echo 'skip cp-config' || ./scripts/cp-config.js.sh",
     "babel": "babel --plugins @babel/plugin-transform-arrow-functions script.js",
     "test": "craco test",
     "test:ci": "craco test --ci --json --outputFile=\"reports/results.json\" --watchAll=false",
@@ -84,7 +85,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-transform-modules-commonjs": "^7.24.7",
+    "@babel/plugin-transform-modules-commonjs": "^7.25.9",
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
     "@telicent-oss/telicent-frontend-cli": "1.1.3",
@@ -103,7 +104,7 @@
   "resolutions": {
     "body-parser": "^1.20.3",
     "cross-spawn": "^7.0.6",
-    "@babel/traverse": "7.24.7",
+    "@babel/traverse": "7.25.9",
     "http-proxy-middleware": "^2.0.7",
     "msw/path-to-regexp": "6.3.0",
     "react-scripts/webpack-dev-server/express/path-to-regexp": "1.9.0",
