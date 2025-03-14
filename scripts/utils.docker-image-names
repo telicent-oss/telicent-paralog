@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -e
+
+if [ -z "$repo_name" ]; then
+  source ./scripts/utils.app-config-json
+fi
+
+image_run="$repo_name-run-local";

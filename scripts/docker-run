@@ -1,13 +1,36 @@
 #!/usr/bin/env bash
-set -e
-# Ear-marked to mv to @telicent-oss/telicent-frontend-cli
+source ./scripts/utils.docker-image-names
+# Note: The above sets:
+# - $image_build 
+# - $image_run
+# - $repo_name (indirectly)
+handle="$repo_name-local"
 # Check if the container exists and remove it if it does
-if [ "$(docker ps -a -q -f name=telicent-paralog-local-running)" ]; then
-    docker rm -f telicent-paralog-local-running
+if [ "$(docker ps -a -q -f name="$handle")" ]; then
+    docker rm -f "$handle"
 fi
+container_file_path="/usr/local/nginx/html/"
 
-docker images | grep telicent-paralog-local
 
-# Run the Docker container
-docker run -p 8080:8080 --user 0:0 --name telicent-paralog-local-running telicent-paralog-local
+# Function to stop the Docker container
+cleanup() {
+  echo "Stopping the Docker container..."
+  docker stop "$handle"
+  echo "Container stopped."
+}
 
+# Trap various signals to ensure cleanup is called when script exits
+trap cleanup EXIT INT TERM
+
+echo "Start --name $handle $image_run" 
+docker run -d -p 8080:8080 --name "$handle" $image_run
+
+echo "Files to host:"
+docker exec "$handle" ls "$container_file_path"
+echo "API calls will likely have CORS errors (but thats good enough)"
+echo "SUCCESS Nginx hosting..."
+./scripts/docker-open
+
+while true; do
+  sleep 10
+done
