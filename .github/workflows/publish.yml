@@ -1,122 +1,95 @@
-# Build and push telicent-paralog
+# Build and publish package to registries
+name: publish.yml
+
 on:
   push:
     branches:
       - main
-      - "api-v2"
     paths:
       - CHANGELOG.md
   workflow_dispatch:
 
 jobs:
-  prepare:
+  app_details:
     runs-on: ubuntu-latest
+    outputs:
+      app_name: ${{ steps.app_config.outputs.app_name }}
+      repo_name: ${{ steps.app_config.outputs.repo_name }}
+      image_registry_name: ${{ steps.app_config.outputs.image_registry_name }}
+      version: ${{ steps.semver.outputs.current-version }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Get version from package.json
-        id: semver
+      - uses: actions/checkout@v3
+      - id: semver
         uses: martinbeentjes/npm-get-version-action@main
       - run: sudo apt-get install jq
       - id: app_config
         run: |
-          APP_NAME=$(jq -r '.app_name // error("app_name missing")' ./src/app.config.json) && \
-            echo "app_name=$APP_NAME" >> $GITHUB_OUTPUT;
-          IMAGE_NAME=$(jq -r '.image_name // error("image_name missing")' ./src/app.config.json) && \
-            echo "image_name=$IMAGE_NAME" >> $GITHUB_OUTPUT;
-          REPO_NAME=$(jq -r '.repo_name // error("repo_name missing")' ./src/app.config.json) && \
-            echo "repo_name=$REPO_NAME" >> $GITHUB_OUTPUT;
-    outputs:
-      semver: ${{ steps.semver.outputs.current-version }}
-      app_name: ${{ steps.app_config.outputs.app_name }}
-      image_name: ${{ steps.app_config.outputs.image_name }}
-      repo_name: ${{ steps.app_config.outputs.repo_name }}
+          APP_NAME=$(jq -r '.app_name' ./app.config.json)
+          echo "app_name=$APP_NAME" >> $GITHUB_OUTPUT
+          REPO_NAME=$(jq -r '.repo_name' ./app.config.json)
+          echo "repo_name=$REPO_NAME" >> $GITHUB_OUTPUT
+          IMG_REG_NAME=$(jq -r '.image_registry_name' ./app.config.json)
+          echo "image_registry_name=$IMG_REG_NAME" >> $GITHUB_OUTPUT
 
-  integrated_tests:
+  run_tests:
+    permissions:
+      id-token: write
+      contents: read
+      packages: write
+    needs: app_details
+    env:
+      APP_NAME: ${{ needs.app_details.outputs.app_name }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20.14
+      - run: LOCAL_MACHINE=false yarn install --frozen-lockfile --network-concurrency 1
+      - run: yarn test:ci
+
+  shared-workflows__vulnerability-scanning-on-repo:
+    needs:
+      - app_details
+      - run_tests
+    uses: telicent-oss/shared-workflows/.github/workflows/vulnerability-scanning-on-repo.yml@main
+    with:
+      APP_NAME: ${{ needs.app_details.outputs.app_name }}
+    secrets: inherit
+
+  build_and_upload_artifacts:
     permissions:
       id-token: write
       contents: read
       packages: write
     needs:
-      - prepare
-    env:
-      NODE_AUTH_TOKEN: ${{ secrets.PACKAGE_PAT }}
+      - run_tests
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: configure-node
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: 20
-          always-auth: true
-      - name: Get node version
-        id: node
-        run: echo "version=$(node -v)" >> $GITHUB_OUTPUT
-      - name: Get node_modules cache
-        uses: actions/cache@v3.0.2
-        id: node_modules
+          node-version: 20.14
+      - run: LOCAL_MACHINE=false yarn install --network-concurrency 1 # Network concurrency to avoid rate-limiting
+      - run: yarn build
+      - uses: actions/upload-artifact@v4
         with:
-          path: |
-            **/node_modules
-          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/yarn.lock') }}-${{ steps.node.outputs.version }}
-          restore-keys: |
-            ${{ runner.os }}-node_modules-
-      - name: Install dependencies
-        run: LOCAL_MACHINE=false yarn install --frozen-lockfile --network-concurrency 1
-      - run: mkdir reports
-      - run: yarn test:ci
+          name: build
+          path: ./build
 
-  run_vulnerability_scan_on_repo:
+  shared-workflows__docker-push-to-registries:
     needs:
-      - prepare
-      - integrated_tests
-    uses: telicent-oss/shared-workflows/.github/workflows/vulnerability-scanning-on-repo.yml@main
-    with:
-      APP_NAME: ${{ needs.prepare.outputs.app_name }}
-    secrets: inherit
-
-  publish_build_image_to_registries:
-    needs:
-      - prepare
-      - integrated_tests
+      - app_details
+      - build_and_upload_artifacts
     uses: telicent-oss/shared-workflows/.github/workflows/docker-push-to-registries.yml@main
     with:
-      APP_NAME: ${{ needs.prepare.outputs.app_name }}
-      DOCKERFILE: Dockerfile.build
-      PATH: .
-      VERSION: ${{ needs.prepare.outputs.semver }}
-    secrets: inherit
-
-  publish_offline_image_to_registries:
-    needs:
-      - prepare
-      - integrated_tests
-      - publish_build_image_to_registries
-    uses: Telicent-oss/shared-workflows/.github/workflows/docker-push-to-registries.yml@main
-    with:
-      APP_NAME: ${{ needs.prepare.outputs.app_name }}
-      DOCKERFILE: Dockerfile.offline
-      PATH: .
-      VERSION: ${{ needs.prepare.outputs.semver }}
-      VERSION_SUFFIX: -offline
-      BUILD_ARGS: |
-        APP_NAME=${{ needs.prepare.outputs.app_name }}
-        BASE_IMAGE=telicent/${{ needs.prepare.outputs.image_name }}-build:${{ needs.prepare.outputs.semver }}-build
-    secrets: inherit
-
-  publish_deployment_image_to_registries:
-    needs:
-      - prepare
-      - integrated_tests
-      - publish_build_image_to_registries
-    uses: Telicent-oss/shared-workflows/.github/workflows/docker-push-to-registries.yml@main
-    with:
-      APP_NAME: ${{ needs.prepare.outputs.app_name }}
+      APP_NAME: ${{ needs.app_details.outputs.app_name }}
       DOCKERFILE: Dockerfile
       PATH: .
-      VERSION: ${{ needs.prepare.outputs.semver }}
+      VERSION: ${{ needs.app_details.outputs.version }}
+      BUILD_ARTIFACT: build
+      ENABLE_BUILDKIT_CACHE: false
       BUILD_ARGS: |
-        APP_NAME=${{ needs.prepare.outputs.app_name }}
-        BASE_IMAGE=telicent/${{ needs.prepare.outputs.image_name }}-build:${{ needs.prepare.outputs.semver }}-build
+        APP_NAME=${{ needs.app_details.outputs.app_name }}
+      GRYPE_SECURITY_ISSUES_BLOCK_ONLY_IF_FIX_AVAILABLE: true
     secrets: inherit

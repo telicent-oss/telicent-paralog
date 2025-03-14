@@ -1,13 +1,10 @@
-# See ./scripts/docker-build for APP_NAME & BASE_IMAGE setting
+FROM telicent/telicent-nginx1.27:latest
 ARG APP_NAME
-ARG BASE_IMAGE=nginx:stable-alpine
-FROM ${BASE_IMAGE} as build
+USER user
+COPY "./$APP_NAME.sbom.json" /opt/telicent/sbom/sbom.json
+COPY nginx/ /usr/local/nginx/conf/
+COPY build/ /usr/local/nginx/html/
 
-FROM nginxinc/nginx-unprivileged:stable-alpine
-COPY --from=build /app/build /usr/share/nginx/html/paralog
-COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
-WORKDIR /usr/share/nginx/html/paralog
-COPY instance.sbom.json /opt/telicent/sbom/sbom.json
+# run
 EXPOSE 8080
-
-CMD [ "nginx", "-g", "daemon off;" ]
+CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
