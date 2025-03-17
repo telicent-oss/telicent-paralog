@@ -1,0 +1,28 @@
+services:
+  paralog-ui:
+    environment:
+      API_URL: http://localhost:4001
+      BETA: true
+      ONTOLOGY_API_URL: http://localhost:5007
+      MAP_TILER_TOKEN: AgCsD3bXojrU2bAN3cVe
+    image: telicent-paralog-run-local
+    ports:
+      - mode: ingress
+        target: "8080"  
+        published: "8080"
+        protocol: tcp
+    restart: on-failure
+  paralog-api:
+    image: telicent/paralog-api
+    environment:
+      JENA_DATASET: knowledge
+      JENA_PORT: 3030
+      JENA_URL: triplestore
+      PORT: 4001
+    ports:
+      - "4001:4001"
+    restart: on-failure
+  triplestore:
+    image: daxid/parliament-triplestore 
+    ports:
+      - "3030:8089"

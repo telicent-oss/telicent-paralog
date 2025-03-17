@@ -4,7 +4,7 @@ import classNames from "classnames";
 import PropTypes from "prop-types";
 
 import { VerticalDivider } from "lib";
-import { ReactComponent as GoogleMapIcon } from "./assets/google-map-icon.svg";
+import { GoogleMapIcon } from "./assets/GoogleMapIcon";
 
 const InfoHeader = ({ isExpanded, count, onToggle, className: wrapperClassName, children }) => (
   <div
