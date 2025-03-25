@@ -9,3 +9,5 @@ jobs:
     name: Run unit tests
     uses: Telicent-oss/shared-workflows/.github/workflows/javascript-test-feature-branch.yml@main
     secrets: inherit
+    with:
+        yarn-test-command: test:ci
