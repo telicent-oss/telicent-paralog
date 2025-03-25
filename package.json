@@ -50,7 +50,7 @@
     "postbuild": "[ \"$LOCAL_MACHINE\" = \"false\" ] && echo 'skip cp-config' || ./scripts/cp-config.js.sh",
     "babel": "babel --plugins @babel/plugin-transform-arrow-functions script.js",
     "test": "craco test",
-    "test:ci": "craco test --ci --json --outputFile=\"reports/results.json\" --watchAll=false",
+    "test:ci": "craco test --ci --json --outputFile=\"reports/results.json\" --watchAll=false --maxConcurrency=1",
     "test:diff": "NODE_OPTIONS=--experimental-vm-modules yarn jest --watchAll=false --coverage=false --onlyChanged --bail",
     "test:vuln": "trivy fs --security-checks vuln --ignore-unfixed --severity HIGH,CRITICAL .",
     "eject": "react-scripts eject",
