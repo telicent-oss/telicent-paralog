@@ -42,9 +42,9 @@ Modal.propTypes = {
   children: PropTypes.node,
 };
 
-Modal.defaultProps = {
-  aria: {},
-  contentLabel: "",
-  overlayClassName: "",
-  classNames: "",
-};
+// Modal.defaultProps = {
+//   aria: {},
+//   contentLabel: "",
+//   overlayClassName: "",
+//   classNames: "",
+// };

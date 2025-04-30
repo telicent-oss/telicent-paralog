@@ -48,9 +48,9 @@ const BuildingsEpcRating = ({ map, query, showBuildings }) => {
   );
 };
 
-BuildingsEpcRating.defaultProps = {
-  showStations: false,
-};
+// BuildingsEpcRating.defaultProps = {
+//   showStations: false,
+// };
 BuildingsEpcRating.propTypes = {
   showStations: PropTypes.bool,
 };

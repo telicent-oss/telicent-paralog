@@ -1,4 +1,5 @@
 import React from "react";
+import { vi } from "vitest";
 
 import { CytoscapeProvider, DatasetContext, ElementsContext } from "context";
 import { DSProvidersWrapper, getCreatedAssets, renderWithQueryClient } from "test-utils";
@@ -20,9 +21,9 @@ const MapComponent = ({
           assets,
           dependencies,
           selectedElements,
-          clearSelectedElements: jest.fn(),
-          onElementClick: jest.fn(),
-          closeTimelinePanel: jest.fn(),
+          clearSelectedElements: vi.fn(),
+          onElementClick: vi.fn(),
+          closeTimelinePanel: vi.fn(),
         }}
       >
         <DatasetContext.Provider value={{ selectedFloodAreas }}>
@@ -35,7 +36,7 @@ const MapComponent = ({
 
 describe("Map component", () => {
   test("should generate empty features when there are no elements", async () => {
-    const spyOnGenerateLinearAssetFeatures = jest.spyOn(
+    const spyOnGenerateLinearAssetFeatures = vi.spyOn(
       mapboxFeatures,
       "generateLinearAssetFeatures"
     );
@@ -45,15 +46,15 @@ describe("Map component", () => {
   });
 
   test("should generate linear asset features", async () => {
-    const spyOnGenerateLinearAssetFeatures = jest.spyOn(
+    const spyOnGenerateLinearAssetFeatures = vi.spyOn(
       mapboxFeatures,
       "generateLinearAssetFeatures"
     );
     const createdAssets = await getCreatedAssets(
       TRANSPORT_ASSETS,
       ["T043"],
-      jest.fn(),
-      jest.fn().mockReturnValue(T034_SEGMENTS)
+      vi.fn(),
+      vi.fn().mockReturnValue(T034_SEGMENTS)
     );
     renderWithQueryClient(<MapComponent assets={createdAssets} />);
 
@@ -63,15 +64,15 @@ describe("Map component", () => {
   });
 
   test("should NOT generate linear asset features when previously selected assets are removed", async () => {
-    const spyOnGenerateLinearAssetFeatures = jest.spyOn(
+    const spyOnGenerateLinearAssetFeatures = vi.spyOn(
       mapboxFeatures,
       "generateLinearAssetFeatures"
     );
     const assets = await getCreatedAssets(
       TRANSPORT_ASSETS,
       ["T043"],
-      jest.fn(),
-      jest.fn().mockReturnValue(T034_SEGMENTS)
+      vi.fn(),
+      vi.fn().mockReturnValue(T034_SEGMENTS)
     );
     const { rerender } = renderWithQueryClient(
       <MapComponent assets={assets} selectedElements={assets} />
@@ -87,15 +88,15 @@ describe("Map component", () => {
   });
 
   test("should generate selected linear asset features for selected assets which exist", async () => {
-    const spyOnGenerateLinearAssetFeatures = jest.spyOn(
+    const spyOnGenerateLinearAssetFeatures = vi.spyOn(
       mapboxFeatures,
       "generateLinearAssetFeatures"
     );
     const assets = await getCreatedAssets(
       TRANSPORT_ASSETS,
       ["T043", "T020"],
-      jest.fn(),
-      jest
+      vi.fn(),
+      vi
         .fn()
         .mockReturnValueOnce(T034_SEGMENTS)
         .mockReturnValueOnce(T020_SEGMENTS)

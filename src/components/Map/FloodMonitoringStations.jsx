@@ -22,9 +22,9 @@ const FloodMonitoringStations = ({ query, showStations }) => {
   );
 };
 
-FloodMonitoringStations.defaultProps = {
-  showStations: false,
-};
+// FloodMonitoringStations.defaultProps = {
+//   showStations: false,
+// };
 FloodMonitoringStations.propTypes = {
   showStations: PropTypes.bool,
 };

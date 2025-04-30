@@ -5,9 +5,10 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom";
-import "jest-canvas-mock";
+import "vitest-canvas-mock";
 import { configure } from "@testing-library/react";
 import { toMatchImageSnapshot } from "jest-image-snapshot";
+import { vi } from "vitest";
 
 import server from "./mocks";
 
@@ -15,15 +16,17 @@ expect.extend({ toMatchImageSnapshot });
 configure({ testIdAttribute: "id" });
 global.ResizeObserver = require("resize-observer-polyfill");
 
+globalThis.URL.createObjectURL =
+  globalThis.URL.createObjectURL || vi.fn(() => "blob:mock-url");
 beforeAll(() => server.listen());
 beforeEach(() => {
   server.resetHandlers();
-  jest.restoreAllMocks();
+  vi.restoreAllMocks();
   window.localStorage.clear();
 });
 afterAll(() => server.close());
 
-jest.mock("react-map-gl", () => ({
+vi.mock("react-map-gl", () => ({
   __esModule: true,
   default: ({ children }) => <div id="telicentMap">{children}</div>,
   Source: ({ props, children }) => (
@@ -39,7 +42,7 @@ jest.mock("react-map-gl", () => ({
   ScaleControl: () => <div>scale control</div>,
   useControl: () => ({}),
   useMap: () =>
-    jest.fn().mockReturnValue({
+    vi.fn().mockReturnValue({
       telicentMap: { zoomIn: jest.fn(), zoomOut: jest.fn() },
     }),
 }));

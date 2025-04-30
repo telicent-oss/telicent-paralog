@@ -89,13 +89,13 @@ const PointAssets = ({ map, assets, dependencies, selectedElements, onElementCli
   );
 };
 
-PointAssets.defaultProps = {
-  assets: [],
-  dependencies: [],
-  selectedElements: [],
-  onElementClick: () => {},
-  moveTo: () => {},
-};
+// PointAssets.defaultProps = {
+//   assets: [],
+//   dependencies: [],
+//   selectedElements: [],
+//   onElementClick: () => {},
+//   moveTo: () => {},
+// };
 
 PointAssets.propTypes = {
   assets: PropTypes.array,

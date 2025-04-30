@@ -1,5 +1,6 @@
 import { screen, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { vi } from "vitest";
 
 import { Dataset } from "components";
 import { ElementsProvider } from "context";
@@ -11,7 +12,7 @@ const user = userEvent.setup();
 
 describe.skip("Grid component", () => {
   test("renders grid", async () => {
-    const spyOnCreateData = jest.spyOn(utils, "createData");
+    const spyOnCreateData = vi.spyOn(utils, "createData");
     render(
       <ElementsProvider>
         <Dataset />

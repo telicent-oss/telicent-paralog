@@ -32,9 +32,9 @@ const FloodZones = ({ selectedFloodZones }) => {
     </div>
   );
 };
-FloodZones.defaultProps = {
-  selectedFloodZones: [],
-};
+// FloodZones.defaultProps = {
+//   selectedFloodZones: [],
+// };
 FloodZones.propTypes = {
   selectedFloodZones: PropTypes.array,
 };

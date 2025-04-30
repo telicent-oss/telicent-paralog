@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
-import Map, { Layer, Source, ScaleControl, useMap, AttributionControl } from "react-map-gl";
+import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import Map, { Layer, Source, ScaleControl, useMap, AttributionControl } from "react-map-gl/maplibre";
 import { ErrorBoundary } from "react-error-boundary";
 
 import { CytoscapeContext, DatasetContext, ElementsContext } from "context";
@@ -37,6 +37,7 @@ const HEAT_RADIUS = 1000;
 
 const TelicentMap = () => {
   const { telicentMap: map } = useMap();
+
   const { moveTo } = useContext(CytoscapeContext);
   const { selectedFloodAreas } = useContext(DatasetContext);
   const { assets, dependencies, selectedElements, onElementClick, onAreaSelect } =
@@ -89,6 +90,16 @@ const TelicentMap = () => {
   );
 
   useEffect(() => {
+    if (!map) return
+    map.on('styledata', () => {
+      const layer = map.getLayer('gl-draw-lines.hot');
+      if (layer) {
+        map.setPaintProperty('gl-draw-lines.hot', 'line-dasharray', ['literal', [2, 4]]);
+      }
+    });
+  }, [map])
+
+  useEffect(() => {
     const isStyleDefined = mapStyles.some((style) => style.id === mapStyle.id);
     if (!isStyleDefined) setMapStyle(mapStyles[0]);
   }, [mapStyles, mapStyle, setMapStyle]);
@@ -107,13 +118,14 @@ const TelicentMap = () => {
     setCursor("auto");
   };
 
-  const handleOnZoom = (event) => {
+  const handleOnZoom = useCallback((event) => {
+    if (!map) return;
     const { _pixelPerMeter } = event.target.transform;
     let radius = HEAT_RADIUS * _pixelPerMeter;
     if (radius < 1) radius = 1;
     map.getMap().setPaintProperty(heatmap.id, "heatmap-radius", radius);
     setHeatmapRadius(radius);
-  };
+  }, [map]);
 
   const togglePointerCoords = () => {
     setShowPointerCoords((prev) => !prev);
@@ -138,7 +150,7 @@ const TelicentMap = () => {
       <div className="relative w-full">
         <Map
           cursor={cursor}
-          id="telicentMap"
+          id="telicentmap"
           interactiveLayerIds={interactiveLayers}
           initialViewState={{ ...VIEWSTATE }}
           mapboxAccessToken="MapboxToken"

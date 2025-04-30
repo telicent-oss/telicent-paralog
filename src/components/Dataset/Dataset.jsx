@@ -48,10 +48,10 @@ const Dataset = ({ showGrid, toggleView }) => {
   );
 };
 export default Dataset;
-Dataset.defaultProps = {
-  showGrid: false,
-  toggleView: () => {},
-};
+// Dataset.defaultProps = {
+//   showGrid: false,
+//   toggleView: () => {},
+// };
 Dataset.propTypes = {
   showGrid: PropTypes.bool,
   toggleView: PropTypes.func,

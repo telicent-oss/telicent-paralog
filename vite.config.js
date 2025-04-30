@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => {
     test: {
       globals: true, // This enables global variables for `describe`, `it`, `test`, `expect`, etc.
       environment: "jsdom", // or 'node' depending on your target
-      setupFiles: ["./src/test-env-setup.js"],
+      setupFiles: ["./src/test-env-setup.js", "./src/setupTests.jsx"],
       coverage: {
         include: ["src/**"],
       },
@@ -30,7 +30,9 @@ export default defineConfig(({ mode }) => {
         constants: path.resolve(__dirname, "src/constants"),
         models: path.resolve(__dirname, "src/models"),
         utils: path.resolve(__dirname, "src/utils"),
+        mocks: path.resolve(__dirname, "src/mocks"),
         "mapbox-gl": "maplibre-gl",
+        "test-utils": path.resolve(__dirname, "./src/test-utils.jsx"),
       },
     },
     plugins: [react(), svgr()], // https://github.com/vitest-dev/vitest/issues/4048#issuecomment-1855141674

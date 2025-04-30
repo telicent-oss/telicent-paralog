@@ -109,7 +109,7 @@ const CarverGrid = ({ assets, dependencies, zoomLevel }) => {
                 key={`dependet-${col.element?.uri}-col${colIndex}`}
                 className="border border-gray-400 border-t-0 border-l-0 text-black-100 text-center"
                 style={{ backgroundColor: col.color }}
-                onClick={(event) => showDepedencyInfo(event, col.element)}
+              // onClick={(event) => showDepedencyInfo(event, col.element)}
               >
                 {col.value}
               </td>
