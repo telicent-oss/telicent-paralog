@@ -25,7 +25,7 @@ const waitForDataToLoad = async () => {
 };
 
 describe("AssessmentTypes component", () => {
-  test.only("renders grouped types", async () => {
+  test("renders grouped types", async () => {
     renderAssessmentTypes();
     await waitForDataToLoad();
 
