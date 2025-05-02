@@ -27,7 +27,7 @@ describe.skip("Grid component", () => {
   });
 });
 
-xdescribe("Grid should populate assets and connections", () => {
+describe.skip("Grid should populate assets and connections", () => {
   describe("Assets should", () => {
     beforeEach(() => {
       render(

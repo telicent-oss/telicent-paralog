@@ -38,10 +38,7 @@ const ResidentialInformation = ({ isAsset, primaryType, uri }) => {
 };
 
 export default ResidentialInformation;
-// ResidentialInformation.defaultProps = {
-//   primaryType: undefined,
-//   uri: undefined,
-// };
+
 ResidentialInformation.propTypes = {
   isAsset: PropTypes.bool.isRequired,
   primaryType: PropTypes.string,
@@ -84,11 +81,6 @@ const Addresses = ({ residences, isLoading, isError, error }) => {
     </>
   );
 };
-// Addresses.defaultProps = {
-//   loading: false,
-//   error: undefined,
-//   residences: [],
-// };
 Addresses.propTypes = {
   residences: PropTypes.array,
   loading: PropTypes.bool,

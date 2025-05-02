@@ -1,4 +1,4 @@
-import { rest } from "msw";
+import { http, rest } from "msw";
 import { screen, waitForElementToBeRemoved } from "@testing-library/react";
 
 import server from "mocks";
@@ -12,7 +12,7 @@ const assessmentsURL = createParalogEndpoint("assessments");
 
 describe("Assessments component", () => {
   test("renders message when /assessments are not found", async () => {
-    server.use(rest.get(assessmentsURL, mockEmptyResponse));
+    server.use(http.get(assessmentsURL, mockEmptyResponse));
     renderWithQueryClient(<Assessments />);
 
     await waitForElementToBeRemoved(() => screen.queryByText(/fetching assessments/i));
@@ -20,7 +20,7 @@ describe("Assessments component", () => {
   });
 
   test("renders error message when /assessments api call fails", async () => {
-    server.use(rest.get(assessmentsURL, mockError));
+    server.use(http.get(assessmentsURL, mockError));
     renderWithQueryClient(<Assessments />);
 
     await waitForElementToBeRemoved(() => screen.queryByText(/fetching assessments/i));

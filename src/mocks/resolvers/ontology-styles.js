@@ -1,3 +1,5 @@
+import { HttpResponse } from "msw";
+
 const styles = [
   {
     cls: {
@@ -35,16 +37,16 @@ const styles = [
 ];
 
 const ontologyClass = (req, res, ctx) => {
-  return res(
-    ctx.status(200),
-    ctx.json({
+  return HttpResponse.json(
+    {
       head: {
         vars: ["cls", "style"],
       },
       results: {
         bindings: styles,
       },
-    })
+    },
+    { status: 200 },
   );
 };
 

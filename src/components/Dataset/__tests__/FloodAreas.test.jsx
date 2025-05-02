@@ -1,5 +1,5 @@
 import { screen, waitForElementToBeRemoved, within } from "@testing-library/react";
-import { rest } from "msw";
+import { http, HttpResponse, rest } from "msw";
 
 import { DatasetContext, DatasetProvider } from "context";
 import { createParalogEndpoint } from "api/combined";
@@ -44,8 +44,8 @@ describe("Flood areas component", () => {
 
   test("renders error when flood watch and flood areas are not found", async () => {
     server.use(
-      rest.get(createParalogEndpoint("flood-watch-areas"), (req, res, ctx) => {
-        return res.once(ctx.status(404), ctx.json({ detail: "Flood areas not found" }));
+      http.get(createParalogEndpoint("flood-watch-areas"), (req, res, ctx) => {
+        return HttpResponse.json({ detail: "Flood areas not found" }, { status: 404 });
       })
     );
     renderWithQueryClient(

@@ -1,10 +1,13 @@
-const floodAreaPolygons = (req, res, ctx) => {
-  const polygonUri = req.url.searchParams.getAll("polygon_uri");
+import { HttpResponse } from "msw";
+
+const floodAreaPolygons = (req) => {
+  const url = new URL(req.request.url);
+  const polygonUri = url.searchParams.getAll("polygon_uri");
   let featureCollection = undefined;
 
   if (
     polygonUri.includes(
-      "http://environment.data.gov.uk/flood-monitoring/id/floodAreas/123ABC456/polygon"
+      "http://environment.data.gov.uk/flood-monitoring/id/floodAreas/123ABC456/polygon",
     )
   ) {
     featureCollection = {
@@ -31,7 +34,12 @@ const floodAreaPolygons = (req, res, ctx) => {
     };
   }
 
-  if (featureCollection) return res(ctx.status(200), ctx.json(featureCollection));
-  return res(ctx.status(404), ctx.json({ detail: `Polygon ${polygonUri} is not found` }));
+  if (featureCollection)
+    return HttpResponse.json(featureCollection, { status: 200 });
+
+  return HttpResponse.json(
+    { detail: `Polygon ${polygonUri} is not found` },
+    { status: 404 },
+  );
 };
 export default floodAreaPolygons;

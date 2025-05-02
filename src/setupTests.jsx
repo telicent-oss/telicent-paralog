@@ -18,14 +18,26 @@ global.ResizeObserver = require("resize-observer-polyfill");
 
 globalThis.URL.createObjectURL =
   globalThis.URL.createObjectURL || vi.fn(() => "blob:mock-url");
-beforeAll(() => server.listen());
+
+
+// globalThis.fetch = (...args) => {
+//   console.log('Intercepted fetch with args:', args);
+//   return originalFetch(...args);
+// };
+
+// server.events.on('request:start', ({ request }) => {
+//   console.log('Outgoing:', request.method, request.url)
+// })
+
+beforeAll(() => server.listen({
+  onUnhandledRequest: 'warn',
+}));
 beforeEach(() => {
   server.resetHandlers();
   vi.restoreAllMocks();
   window.localStorage.clear();
 });
 afterAll(() => server.close());
-
 vi.mock("react-map-gl", () => ({
   __esModule: true,
   default: ({ children }) => <div id="telicentMap">{children}</div>,

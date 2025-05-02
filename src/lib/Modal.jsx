@@ -41,10 +41,3 @@ Modal.propTypes = {
   classNames: PropTypes.string,
   children: PropTypes.node,
 };
-
-// Modal.defaultProps = {
-//   aria: {},
-//   contentLabel: "",
-//   overlayClassName: "",
-//   classNames: "",
-// };

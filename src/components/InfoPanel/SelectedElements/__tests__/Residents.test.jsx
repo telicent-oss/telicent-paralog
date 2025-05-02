@@ -1,5 +1,5 @@
 import { screen, waitForElementToBeRemoved, within } from "@testing-library/react";
-import { rest } from "msw";
+import { http, HttpResponse } from "msw";
 
 import { server } from "mocks";
 import { createParalogEndpoint } from "api/combined";
@@ -79,19 +79,17 @@ describe("Residents component", () => {
 
   test("renders more than one resident", async () => {
     server.use(
-      rest.get(createParalogEndpoint("asset/residents"), (req, res, ctx) => {
-        const assetUri = req.url.searchParams.get("assetUri");
+      http.get(createParalogEndpoint("asset/residents"), (req, res, ctx) => {
+        const url = new URL(req.request.url);
+        const assetUri = url.searchParams.get("assetUri");
         if (assetUri === "https://www.example.com/Instruments#R013") {
-          return res.once(
-            ctx.status(200),
-            ctx.json([
-              ...R013_RESIDENTS,
-              {
-                uri: "https://www.wow.gov.uk/Testing#V003",
-                name: "Mr Charles Berry",
-              },
-            ])
-          );
+          return HttpResponse.json([
+            ...R013_RESIDENTS,
+            {
+              uri: "https://www.wow.gov.uk/Testing#V003",
+              name: "Mr Charles Berry",
+            },
+          ], { status: 200 })
         }
       })
     );
@@ -131,7 +129,7 @@ describe("Residents component", () => {
 
   // Adding this test because currently the api does not return a 404 when an address cannot be found
   test("does NOT render residents when none are found", async () => {
-    server.use(rest.get(createParalogEndpoint("asset/residents"), mockEmptyResponse));
+    server.use(http.get(createParalogEndpoint("asset/residents"), mockEmptyResponse));
     renderWithQueryClient(
       <Residents
         isAsset
@@ -147,10 +145,11 @@ describe("Residents component", () => {
     const data = { ...R013_RESIDENTS[0] };
     delete data.name;
     server.use(
-      rest.get(createParalogEndpoint("asset/residents"), (req, res, ctx) => {
-        const assetUri = req.url.searchParams.get("assetUri");
+      http.get(createParalogEndpoint("asset/residents"), (req) => {
+        const url = new URL(req.request.url);
+        const assetUri = url.searchParams.get("assetUri");
         if (assetUri === "https://www.example.com/Instruments#R013") {
-          return res.once(ctx.status(200), ctx.json([data]));
+          return HttpResponse.json([data], { status: 200 });
         }
       })
     );

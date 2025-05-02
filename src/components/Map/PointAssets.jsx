@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Layer, Marker, Source } from "react-map-gl";
 import PropTypes from "prop-types";
 import { useOntologyStyles } from "@telicent-oss/ds";
@@ -9,13 +9,17 @@ import { generatePointAssetFeatures } from "./map-utils";
 import { FLOOD_AREA_LAYERS, heatmap, pointAssetCxnLayer } from "./layers";
 
 const PointAssets = ({ map, assets, dependencies, selectedElements, onElementClick, moveTo }) => {
+  const stableAssetsRef = useMemo(() => assets ?? [], [assets]);
+  const stableDependenciesRef = useMemo(() => dependencies ?? [], [dependencies]);
+  const stableElementsRef = useMemo(() => selectedElements ?? [], [selectedElements]);
+
   const [features, setFeatures] = useState([]);
   const points = features.filter((feature) => feature.geometry.type === "Point");
 
   useEffect(() => {
-    const features = generatePointAssetFeatures(assets, dependencies, selectedElements);
+    const features = generatePointAssetFeatures(stableAssetsRef, stableDependenciesRef, stableElementsRef);
     setFeatures(features);
-  }, [assets, dependencies, selectedElements]);
+  }, [stableAssetsRef, stableDependenciesRef, stableElementsRef]);
 
   useEffect(() => {
     if (!map) return;
@@ -65,11 +69,11 @@ const PointAssets = ({ map, assets, dependencies, selectedElements, onElementCli
     );
 
     onElementClick(isMultiSelect, elements);
-    moveTo({ cachedElements: selectedElements, selectedElements: elements });
+    moveTo({ cachedElements: stableElementsRef, selectedElements: elements });
   };
 
   const isSelected = (feature) => {
-    const isSelected = selectedElements.some(
+    const isSelected = stableElementsRef.some(
       (selectedElement) => selectedElement.uri === feature.properties.uri
     );
     return isSelected;
@@ -88,14 +92,6 @@ const PointAssets = ({ map, assets, dependencies, selectedElements, onElementCli
     </Source>
   );
 };
-
-// PointAssets.defaultProps = {
-//   assets: [],
-//   dependencies: [],
-//   selectedElements: [],
-//   onElementClick: () => {},
-//   moveTo: () => {},
-// };
 
 PointAssets.propTypes = {
   assets: PropTypes.array,

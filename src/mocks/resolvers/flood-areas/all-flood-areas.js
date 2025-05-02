@@ -1,7 +1,8 @@
+import { HttpResponse } from "msw";
+
 const allFloodAreas = (req, res, ctx) => {
-  return res(
-    ctx.status(200),
-    ctx.json([
+  return HttpResponse.json(
+    [
       {
         uri: "http://environment.data.gov.uk/flood-monitoring/id/floodAreas/123ABC456",
         name: "American",
@@ -22,7 +23,8 @@ const allFloodAreas = (req, res, ctx) => {
           },
         ],
       },
-    ])
+    ],
+    { status: 200 },
   );
 };
 export default allFloodAreas;

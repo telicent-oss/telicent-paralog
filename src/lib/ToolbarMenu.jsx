@@ -46,6 +46,6 @@ const MenuBtn = ({ name, selected, onItemClick, children }) => (
   </button>
 );
 
-const MenuToggle = ({ name, selected, onItemClick }) => (
+const MenuToggle = ({ name, selected = false, onItemClick }) => (
   <TelicentSwitch label={name} checked={selected} onChange={onItemClick} />
 );

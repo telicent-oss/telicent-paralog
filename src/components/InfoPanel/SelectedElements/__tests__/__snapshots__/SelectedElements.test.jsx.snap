@@ -1,0 +1,122 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Selected Elements component > renders a list of selected element details > selected elements 1`] = `
+<ul
+  class="flex flex-col gap-y-3 grow min-h-0 overflow-y-auto"
+>
+  <li
+    class="border-b border-whiteSmoke-800"
+  >
+    <button
+      aria-label="West Coleman 50kV Substation"
+      class="pb-3 text-left"
+    >
+      <div
+        class="grid gap-y-1"
+      >
+        <div
+          class="asset__details"
+        >
+          <div
+            aria-label="LargeWindFarm"
+            class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-zd96tt-MuiAvatar-root"
+          >
+            <i
+              class="fa-solid fa-utility-pole-double"
+              title="LargeWindFarm-icon"
+            />
+          </div>
+          <div>
+            <h2
+              class="text-lg font-medium"
+            >
+              West Coleman 50kV Substation
+            </h2>
+            <p
+              class="text-sm uppercase"
+            >
+              large wind farm
+            </p>
+            <p>
+              E003
+            </p>
+          </div>
+        </div>
+      </div>
+    </button>
+  </li>
+  <li
+    class="border-b border-whiteSmoke-800"
+  >
+    <button
+      aria-label="Best Coleman Power Station"
+      class="pb-3 text-left"
+    >
+      <div
+        class="grid gap-y-1"
+      >
+        <div
+          class="asset__details"
+        >
+          <div
+            aria-label="CoalPlantComplex"
+            class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-zd96tt-MuiAvatar-root"
+          >
+            <i
+              class="fa-regular fa-bolt-lightning"
+              title="CoalPlantComplex-icon"
+            />
+          </div>
+          <div>
+            <h2
+              class="text-lg font-medium"
+            >
+              Best Coleman Power Station
+            </h2>
+            <p
+              class="text-sm uppercase"
+            >
+              coal plant complex
+            </p>
+            <p>
+              E001
+            </p>
+          </div>
+        </div>
+      </div>
+    </button>
+  </li>
+  <li
+    class="border-b border-whiteSmoke-800"
+  >
+    <button
+      aria-label="Best Coleman Power Station - West Coleman 50kV Substation"
+      class="pb-3 text-left"
+    >
+      <div
+        class="grid gap-y-1"
+      >
+        <div
+          class="asset__details"
+        >
+          <span
+            class="flex items-center justify-center w-12 h-12"
+            id="dependent-icon"
+            style="width: 1rem; height: 0.125rem; background-color: rgb(255, 182, 10);"
+          />
+          <div>
+            <h2
+              class="text-lg font-medium"
+            >
+              Best Coleman Power Station - West Coleman 50kV Substation
+            </h2>
+            <p>
+              E001 - E003
+            </p>
+          </div>
+        </div>
+      </div>
+    </button>
+  </li>
+</ul>
+`;

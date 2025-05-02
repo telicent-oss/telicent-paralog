@@ -9,8 +9,9 @@ import { isEmpty } from "lodash";
  * list
  */
 const useGroupedAssets = ({ assessment, searchFilter }) => {
-  const searchFilterWithoutWhitespace = searchFilter.toLowerCase().replace(" ", "");
-
+  const searchFilterWithoutWhitespace = searchFilter
+    .toLowerCase()
+    .replace(" ", "");
   const assetsQuery = useQuery({
     queryKey: ["assets", assessment],
     queryFn: () => fetchAssetTypes(assessment),
@@ -45,21 +46,25 @@ const useGroupedAssets = ({ assessment, searchFilter }) => {
   };
 
   const getSuperclassGroups = () => {
-    const uniqueGroups = [...new Set(assetWithSuperClass.map((type) => type?.superClass))];
+    const uniqueGroups = [
+      ...new Set(assetWithSuperClass.map((type) => type?.superClass)),
+    ];
 
     if (!searchFilter) return uniqueGroups;
 
     return uniqueGroups.filter(
       (group) =>
-        getAssetsInSuperclassGroup(group).filter(doesIncludeSearchFilterChars).length >= 1 ||
-        group.toLowerCase().includes(searchFilterWithoutWhitespace)
+        getAssetsInSuperclassGroup(group).filter(doesIncludeSearchFilterChars)
+          .length >= 1 ||
+        group.toLowerCase().includes(searchFilterWithoutWhitespace),
     );
   };
 
   const getSuperclassChildren = (selectedGroup) => {
     const superclassGroup = getAssetsInSuperclassGroup(selectedGroup);
 
-    if (selectedGroup.toLowerCase().includes(searchFilter)) return superclassGroup;
+    if (selectedGroup.toLowerCase().includes(searchFilter))
+      return superclassGroup;
 
     return superclassGroup.filter(doesIncludeSearchFilterChars);
   };

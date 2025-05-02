@@ -1,6 +1,6 @@
 import React from "react";
 import { screen, waitForElementToBeRemoved, within } from "@testing-library/react";
-import { rest } from "msw";
+import { http, HttpResponse, rest } from "msw";
 
 import { ElementsProvider } from "context";
 import { createParalogEndpoint } from "api/combined";
@@ -89,10 +89,11 @@ describe("Dependents component", () => {
 
   test("does NOT show dependents when none are found", async () => {
     server.use(
-      rest.get(createParalogEndpoint("asset/dependents"), (req, res, ctx) => {
-        const assetUri = req.url.searchParams.get("assetUri");
+      http.get(createParalogEndpoint("asset/dependents"), (req) => {
+        const url = new URL(req.request.url);
+        const assetUri = url.searchParams.get("assetUri");
         if (assetUri === "https://www.example.com/Instruments#E003") {
-          return res.once(ctx.status(200), ctx.json([]));
+          return HttpResponse.json([], { status: 200 });
         }
       })
     );
@@ -105,15 +106,14 @@ describe("Dependents component", () => {
 
   test("renders error message when asset dependents cannot be retrieved", async () => {
     server.use(
-      rest.get(createParalogEndpoint("asset/dependents"), (req, res, ctx) => {
-        const assetUri = req.url.searchParams.get("assetUri");
+      http.get(createParalogEndpoint("asset/dependents"), (req) => {
+
+        const url = new URL(req.request.url);
+        const assetUri = url.searchParams.get("assetUri");
         if (assetUri === "https://www.example.com/Instruments#E003") {
-          return res.once(
-            ctx.status(404),
-            ctx.json({
-              message: "Depedents for https://www.example.com/Instruments#E003 not found",
-            })
-          );
+          return HttpResponse.json({
+            message: "Depedents for https://www.example.com/Instruments#E003 not found",
+          }, { status: 404 })
         }
       })
     );
@@ -128,15 +128,14 @@ describe("Dependents component", () => {
 
   test("renders error message when one or more dependents returns an error", async () => {
     server.use(
-      rest.get(createParalogEndpoint("asset"), (req, res, ctx) => {
-        const assetUri = req.url.searchParams.get("assetUri");
+      http.get(createParalogEndpoint("asset"), (req) => {
+
+        const url = new URL(req.request.url);
+        const assetUri = url.searchParams.get("assetUri");
         if (assetUri === "https://www.example.com/Instruments#E001") {
-          return res.once(
-            ctx.status(404),
-            ctx.json({
-              message: "Asset information for https://www.example.com/Instruments#E001 not found",
-            })
-          );
+          return HttpResponse.json({
+            message: "Asset information for https://www.example.com/Instruments#E001 not found",
+          }, { status: 404 })
         }
       })
     );

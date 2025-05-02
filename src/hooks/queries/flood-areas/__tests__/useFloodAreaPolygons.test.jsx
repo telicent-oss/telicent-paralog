@@ -1,4 +1,4 @@
-import { rest } from "msw";
+import { http, HttpResponse } from "msw";
 import { waitFor, renderHook } from "@testing-library/react";
 
 import { ElementsContext } from "context";
@@ -34,8 +34,8 @@ describe("useFloodAreaPolygons hook", () => {
 
   test("returns empty array when flood area is not selected", async () => {
     server.use(
-      rest.get(createParalogEndpoint("flood-watch-areas/polygon"), (req, res, ctx) => {
-        return res.once(ctx.status(200), ctx.json({}));
+      http.get(createParalogEndpoint("flood-watch-areas/polygon"), (req, res) => {
+        return HttpResponse.json({}, { status: 200 });
       })
     );
     const { result } = renderHook(

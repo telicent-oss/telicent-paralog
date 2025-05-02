@@ -11,7 +11,7 @@ import FloodAreas from "components/Dataset/FloodAreas";
 
 import "react-tabs/style/react-tabs.css";
 
-const Dataset = ({ showGrid, toggleView }) => {
+const Dataset = ({ showGrid = false, toggleView }) => {
   const [showPanel, setShowPanel] = useState(true);
 
   const togglePanel = () => {
@@ -57,7 +57,7 @@ Dataset.propTypes = {
   toggleView: PropTypes.func,
 };
 
-const DatasetContent = ({ expand, showGrid, onToggle, onViewGrid, children }) => {
+const DatasetContent = ({ expand, showGrid = false, onToggle, onViewGrid, children }) => {
   if (!expand) return <DBButton onToggle={onToggle} className="w-fit" />;
   return (
     <>

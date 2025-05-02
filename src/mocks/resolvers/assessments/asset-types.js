@@ -1,12 +1,14 @@
 import { ASSESSMENTS, WOW_ASSET_TYPES } from "mocks/data";
+import { HttpResponse } from "msw";
 
-const assetTypes = (req, res, ctx) => {
+const assetTypes = (req) => {
+  const url = new URL(req.request.url);
   let types = [];
-  const assessment = req.url.searchParams.get("assessment");
+  const assessment = url.searchParams.get("assessment");
 
   if (assessment === "https://www.example.com/Instruments#wowAssessment") {
     types = WOW_ASSET_TYPES;
   }
-  return res(ctx.status(200), ctx.json(types));
+  return HttpResponse.json(types, { status: 200 });
 };
 export default assetTypes;

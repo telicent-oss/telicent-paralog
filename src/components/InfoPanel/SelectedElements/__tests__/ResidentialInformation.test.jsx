@@ -1,4 +1,4 @@
-import { rest } from "msw";
+import { http, HttpResponse } from "msw";
 import { screen, waitForElementToBeRemoved, within } from "@testing-library/react";
 
 import { renderWithQueryClient } from "test-utils";
@@ -63,30 +63,28 @@ describe("Residential information component", () => {
 
   test("limits addresses displayed", async () => {
     server.use(
-      rest.get(createParalogEndpoint("person/residences"), (req, res, ctx) => {
-        const personUri = req.url.searchParams.get("personUri");
+      http.get(createParalogEndpoint("person/residences"), (req, res, ctx) => {
+        const url = new URL(req.request.url);
+        const personUri = url.searchParams.get("personUri");
         if (personUri === "https://www.example.com/Instruments%23V013") {
-          return res.once(
-            ctx.status(200),
-            ctx.json([
-              ...V013_RESIDENCES,
-              {
-                uri: "https://www.example.com/Instruments#RT01",
-                assetType: "http://ies.example.com/ontology/ies#ResidentialBuilding",
-                address: "1 Telicent Rd, Freshwater, TO01 ABC",
-              },
-              {
-                uri: "https://www.example.com/Instruments#RT02",
-                assetType: "http://ies.example.com/ontology/ies#ResidentialBuilding",
-                address: "2 Telicent Rd, Freshwater, T002 DEF",
-              },
-              {
-                uri: "https://www.example.com/Instruments#RT03",
-                assetType: "http://ies.example.com/ontology/ies#ResidentialBuilding",
-                address: "3 Telicent Rd, Freshwater, T003 GHI",
-              },
-            ])
-          );
+          return HttpResponse.json([
+            ...V013_RESIDENCES,
+            {
+              uri: "https://www.example.com/Instruments#RT01",
+              assetType: "http://ies.example.com/ontology/ies#ResidentialBuilding",
+              address: "1 Telicent Rd, Freshwater, TO01 ABC",
+            },
+            {
+              uri: "https://www.example.com/Instruments#RT02",
+              assetType: "http://ies.example.com/ontology/ies#ResidentialBuilding",
+              address: "2 Telicent Rd, Freshwater, T002 DEF",
+            },
+            {
+              uri: "https://www.example.com/Instruments#RT03",
+              assetType: "http://ies.example.com/ontology/ies#ResidentialBuilding",
+              address: "3 Telicent Rd, Freshwater, T003 GHI",
+            },
+          ], { status: 200 })
         }
       })
     );
@@ -163,10 +161,11 @@ describe("Residential information component", () => {
   // Adding this test because currently the api does not return a 404 when an address cannot be found
   test("renders message when addresses are not found", async () => {
     server.use(
-      rest.get(createParalogEndpoint("person/residences"), (req, res, ctx) => {
-        const personUri = req.url.searchParams.get("personUri");
+      http.get(createParalogEndpoint("person/residences"), (req, res, ctx) => {
+        const url = new URL(req.request.url);
+        const personUri = url.searchParams.get("personUri");
         if (personUri === "https://www.example.com/Instruments%23V013") {
-          return res.once(ctx.status(200), ctx.json([]));
+          return HttpResponse.json([], { status: 200 });
         }
       })
     );
@@ -189,10 +188,11 @@ describe("Residential information component", () => {
     const data = { ...V013_RESIDENCES[0] };
     delete data.address;
     server.use(
-      rest.get(createParalogEndpoint("person/residences"), (req, res, ctx) => {
-        const personUri = req.url.searchParams.get("personUri");
+      http.get(createParalogEndpoint("person/residences"), (req, res, ctx) => {
+        const url = new URL(req.request.url);
+        const personUri = url.searchParams.get("personUri");
         if (personUri === "https://www.example.com/Instruments%23V013") {
-          return res.once(ctx.status(200), ctx.json([data]));
+          return HttpResponse.json([data], { status: 200 });
         }
       })
     );

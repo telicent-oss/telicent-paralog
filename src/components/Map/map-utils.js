@@ -3,7 +3,11 @@ import { isEmpty } from "lodash";
 
 const filterEmptyElements = (element) => !isEmpty(element);
 
-export const generatePointAssetFeatures = (assets, dependencies, selectedElements) => {
+export const generatePointAssetFeatures = (
+  assets,
+  dependencies,
+  selectedElements,
+) => {
   const pointAssets = assets
     .filter((asset) => asset.lat && asset.lng)
     .map((asset) => {

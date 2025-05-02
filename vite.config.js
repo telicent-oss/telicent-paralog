@@ -6,7 +6,6 @@ import { fileURLToPath } from "node:url";
 import appConfig from "./app.config.json";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-console.log(path.resolve(__dirname, "src/context"));
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   return {

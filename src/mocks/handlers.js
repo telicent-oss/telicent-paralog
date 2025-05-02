@@ -1,6 +1,9 @@
-import { rest } from "msw";
+import { http } from "msw";
 
-import { createOntologyServiceEndpoint, createParalogEndpoint } from "api/combined";
+import {
+  createOntologyServiceEndpoint,
+  createParalogEndpoint,
+} from "api/combined";
 import {
   ASSESSMENTS_ASSETS_ENDPOINT,
   ASSESSMENTS_DEPENDENCIES_ENDPOINT,
@@ -9,17 +12,33 @@ import {
 import * as resolvers from "./resolvers";
 
 export const handlers = [
-  rest.get(createParalogEndpoint("assessments"), resolvers.assessments),
-  rest.get(createParalogEndpoint("assessments/asset-types"), resolvers.assetTypes),
-  rest.get(ASSESSMENTS_ASSETS_ENDPOINT, resolvers.mockEmptyResponse),
-  rest.get(ASSESSMENTS_DEPENDENCIES_ENDPOINT, resolvers.mockEmptyResponse),
-  rest.get(createParalogEndpoint("asset"), resolvers.asset),
-  rest.get(createParalogEndpoint("asset/dependents"), resolvers.dependents),
-  rest.get(createParalogEndpoint("asset/providers"), resolvers.providers),
-  rest.get(createParalogEndpoint("asset/residents"), resolvers.residents),
-  rest.get(createParalogEndpoint("flood-watch-areas"), resolvers.allFloodAreas),
-  rest.get(createParalogEndpoint("flood-watch-areas/polygon"), resolvers.floodAreaPolygons),
-  rest.get(createParalogEndpoint("person/residences"), resolvers.personResidences),
-  rest.get(createParalogEndpoint("ontology/class"), resolvers.ontologyClass),
-  rest.get(createOntologyServiceEndpoint("ontology/query"), resolvers.ontologyStyles),
+  http.get(createParalogEndpoint("assessments"), resolvers.assessments),
+  http.get(
+    createParalogEndpoint("assessments/asset-types"),
+    resolvers.assetTypes,
+  ),
+  http.get(ASSESSMENTS_ASSETS_ENDPOINT, resolvers.mockEmptyResponse),
+  http.get(ASSESSMENTS_DEPENDENCIES_ENDPOINT, resolvers.mockEmptyResponse),
+  http.get(createParalogEndpoint("asset"), resolvers.asset),
+  http.get(createParalogEndpoint("asset/dependents"), resolvers.dependents),
+  http.get(createParalogEndpoint("asset/providers"), resolvers.providers),
+  http.get(createParalogEndpoint("asset/residents"), resolvers.residents),
+  http.get(createParalogEndpoint("flood-watch-areas"), resolvers.allFloodAreas),
+  http.get(
+    createParalogEndpoint("flood-watch-areas/polygon"),
+    resolvers.floodAreaPolygons,
+  ),
+  http.get(
+    createParalogEndpoint("person/residences"),
+    resolvers.personResidences,
+  ),
+  http.get(createParalogEndpoint("ontology/class"), resolvers.ontologyClass),
+  http.get(
+    createOntologyServiceEndpoint("ontology/query"),
+    resolvers.ontologyStyles,
+  ),
+  http.all("*", (req, res, ctx) => {
+    console.warn("[MSW] Unhandled request to:", req.url.href);
+    return res(ctx.status(500));
+  }),
 ];

@@ -1,3 +1,5 @@
+import { HttpResponse } from "msw";
+
 const SUPER_CLASSES = {
   "http://ies.example.com/ontology/ies#SewerPlant": {
     superClass: ["http://ies.example.com/ontology/ies#WastewaterComplex"],
@@ -22,12 +24,20 @@ const SUPER_CLASSES = {
   },
 };
 
-const ontologyClass = (req, res, ctx) => {
-  const classUri = req.url.searchParams.get("classUri");
+const ontologyClass = (req) => {
+  const url = new URL(req.request.url);
+  const classUri = url.searchParams.get("classUri");
 
   const superClass = SUPER_CLASSES[classUri];
-  if (superClass) return res(ctx.status(200), ctx.json({ [classUri]: SUPER_CLASSES[classUri] }));
-  return res(ctx.status(404), ctx.json({ detail: `Could not retrieve class for ${classUri}` }));
+  if (superClass)
+    return HttpResponse.json(
+      { [classUri]: SUPER_CLASSES[classUri] },
+      { status: 200 },
+    );
+  return HttpResponse.json(
+    { detail: `Could not retrieve class for ${classUri}` },
+    { status: 404 },
+  );
 };
 
 export default ontologyClass;
