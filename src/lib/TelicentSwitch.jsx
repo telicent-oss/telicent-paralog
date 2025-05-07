@@ -4,7 +4,7 @@ import ReactSwitch from "react-switch";
 
 const TelicentSwitch = ({ label, checked = false, onChange, className: wrapperClassName }) => (
   <label
-    c className={classNames("flex items-center gap-x-3 text-sm w-fit", {
+    className={classNames("flex items-center gap-x-3 text-sm w-fit", {
       [wrapperClassName]: wrapperClassName,
     })}
   >

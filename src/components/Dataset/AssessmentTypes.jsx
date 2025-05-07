@@ -28,8 +28,6 @@ const AssessmentTypes = ({ assessment }) => {
 
   const sortedSuperclassGroups = getSuperclassGroups().sort();
 
-  console.log({ sortedSuperclassGroups })
-
   return (
     <>
       <TeliTextField

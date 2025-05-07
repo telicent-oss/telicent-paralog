@@ -22,10 +22,7 @@ const InfoHeader = ({ isExpanded, count, onToggle, className: wrapperClassName, 
 );
 
 export default InfoHeader;
-// InfoHeader.defaultProps = {
-//   classNames: undefined,
-//   children: null,
-// };
+
 InfoHeader.propTypes = {
   isExpanded: PropTypes.bool.isRequired,
   count: PropTypes.number.isRequired,
