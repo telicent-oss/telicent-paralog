@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.2](https://github.com/telicent-oss/telicent-paralog/compare/v1.3.1...v1.3.2) (2025-05-08)
+
+
+### Bug Fixes
+
+* build output ([9ecccc6](https://github.com/telicent-oss/telicent-paralog/commit/9ecccc657ca628537483ba38dfbfc02ada5d1b59))
+
 ## [1.3.1](https://github.com/telicent-oss/telicent-paralog/compare/v1.3.0...v1.3.1) (2025-05-08)
 
 
