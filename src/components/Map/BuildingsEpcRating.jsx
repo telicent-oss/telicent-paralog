@@ -16,7 +16,7 @@ const epcColourLookup = {
   G: "text-[#E92731]",
 };
 
-const BuildingsEpcRating = ({ map, query, showBuildings }) => {
+const BuildingsEpcRating = ({ map, query, showBuildings = false }) => {
   const [selectedBuilding, setSelectedBuilding] = useState(undefined);
   const { data: features, isLoading } = query;
 
@@ -48,9 +48,6 @@ const BuildingsEpcRating = ({ map, query, showBuildings }) => {
   );
 };
 
-BuildingsEpcRating.defaultProps = {
-  showStations: false,
-};
 BuildingsEpcRating.propTypes = {
   showStations: PropTypes.bool,
 };

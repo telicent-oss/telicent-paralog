@@ -69,16 +69,8 @@ const AssessmentTypes = ({ assessment }) => {
 };
 export default AssessmentTypes;
 
-AssessmentTypes.defaultProps = {
-  assessment: undefined,
-  selectedTypes: [],
-  setSelectedTypes: () => {},
-};
-
 AssessmentTypes.propTypes = {
   assessment: PropTypes.string,
-  selectedTypes: PropTypes.arrayOf(PropTypes.string),
-  setSelectedTypes: PropTypes.func,
 };
 
 const AssessmentGroup = ({ expand, title, onToggle, className: wrapperClassName, children }) => (
@@ -107,11 +99,6 @@ const AssessmentGroup = ({ expand, title, onToggle, className: wrapperClassName,
     {children}
   </div>
 );
-
-AssessmentGroup.defaultProps = {
-  show: false,
-  classNames: undefined,
-};
 
 AssessmentGroup.propTypes = {
   show: PropTypes.bool,

@@ -3,7 +3,7 @@ import { createParalogEndpoint, fetchOptions } from "./utils";
 export const fetchAssessments = async () => {
   const response = await fetch(
     createParalogEndpoint("assessments"),
-    fetchOptions
+    fetchOptions,
   );
 
   if (!response.ok) {
@@ -17,12 +17,12 @@ export const fetchAssetTypes = async (assessment) => {
   const queryParams = new URLSearchParams({ assessment }).toString();
   const response = await fetch(
     createParalogEndpoint(`assessments/asset-types?${queryParams}`),
-    fetchOptions
+    fetchOptions,
   );
 
   if (!response.ok) {
     throw new Error(
-      `An error occurred while retrieving data types for ${assessment}`
+      `An error occurred while retrieving data types for ${assessment}`,
     );
   }
 
@@ -38,12 +38,12 @@ export const fetchAssessmentAssets = async (assessment, types) => {
 
   const response = await fetch(
     createParalogEndpoint(`assessments/assets?${queryParams}`),
-    fetchOptions
+    fetchOptions,
   );
 
   if (!response.ok) {
     throw new Error(
-      `An error occurred while retrieving assets for assessment ${assessment} and types ${types.toString()}`
+      `An error occurred while retrieving assets for assessment ${assessment} and types ${types.toString()}`,
     );
   }
 
@@ -59,12 +59,12 @@ export const fetchAssessmentDependencies = async (assessment, types) => {
 
   const response = await fetch(
     createParalogEndpoint(`assessments/dependencies?${queryParams}`),
-    fetchOptions
+    fetchOptions,
   );
 
   if (!response.ok) {
     throw new Error(
-      `An error occurred while retrieving dependencies for assessment ${assessment} and types ${typeParams.toString()}`
+      `An error occurred while retrieving dependencies for assessment ${assessment} and types ${typeParams.toString()}`,
     );
   }
 

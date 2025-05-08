@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Provider as UseHttpProvider } from "use-http";
 
-import { ElementsProvider } from "context";
+import { DatasetProvider, ElementsProvider } from "context";
 import { DSProvidersWrapper, renderWithQueryClient } from "test-utils";
 import Dataset from "../Dataset";
 
@@ -11,7 +11,11 @@ const user = userEvent.setup();
 const AllProviders = ({ children }) => (
   <UseHttpProvider options={{ cacheLife: 0, cachePolicy: "no-cache" }}>
     <ElementsProvider>
-      <DSProvidersWrapper>{children}</DSProvidersWrapper>
+      <DSProvidersWrapper>
+        <DatasetProvider>
+          {children}
+        </DatasetProvider>
+      </DSProvidersWrapper>
     </ElementsProvider>
   </UseHttpProvider>
 );

@@ -32,11 +32,11 @@ const ResizableContainer = ({ children }) => {
 };
 
 export default ResizableContainer;
-ResizableContainer.defaultProps = {
-  onResize: () => {},
-  onResizeStop: () => {},
-  children: null,
-};
+// ResizableContainer.defaultProps = {
+//   onResize: () => {},
+//   onResizeStop: () => {},
+//   children: null,
+// };
 ResizableContainer.propTypes = {
   onResize: PropTypes.func,
   onResizeStop: PropTypes.func,

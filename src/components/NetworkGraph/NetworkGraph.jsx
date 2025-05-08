@@ -15,6 +15,15 @@ import { createEdges, createNode, nodeLabels } from "./cytoscapeUtils";
 import cyStylesheet from "./stylesheet";
 import GraphToolbar from "./GraphToolbar";
 
+cytoscape.use(cola);
+cytoscape.use(dagre);
+cytoscape.use(avsdf);
+
+if (typeof cytoscape("core", "nodeHtmlLabel") === "undefined") {
+  // cytoscape.use(nodeHtmlLabel);
+  nodeHtmlLabel(cytoscape);
+}
+
 const NetworkGraph = ({ showGrid }) => {
   const { telicentMap: map } = useMap();
   const { cyRef, layout: graphLayout, runLayout, updateLayout } = useContext(CytoscapeContext);
@@ -24,16 +33,8 @@ const NetworkGraph = ({ showGrid }) => {
   const nodes = useMemo(() => createNode(assets), [assets]);
   const edges = useMemo(() => createEdges(nodes, dependencies), [nodes, dependencies]);
 
-  cytoscape.use(cola);
-  cytoscape.use(dagre);
-  cytoscape.use(avsdf);
-  if (typeof cytoscape("core", "nodeHtmlLabel") === "undefined") {
-    cytoscape.use(nodeHtmlLabel);
-  }
-
   useEffect(() => {
     if (showGrid) return;
-
     runLayout();
   }, [nodes, edges, showGrid, runLayout]);
 

@@ -3,7 +3,7 @@ import { DSProviders, TeliStandardLayout } from "@telicent-oss/ds";
 import OntologyService from "@telicent-oss/ontologyservice";
 
 import { DatasetProvider } from "context";
-import { Dataset, Grid, InfoPanel, NetworkGraph, SponsorsLogos, TelicentMap } from "./components";
+import { Dataset, Grid, InfoPanel, NetworkGraph, TelicentMap } from "./components";
 import FloodZoneTimeline from "components/Map/FloodZoneTimeline";
 import config from "./config/app-config";
 import { ErrorNotification, ResizableContainer } from "./lib";
@@ -27,7 +27,6 @@ const App = () => {
 
   return (
     <DSProviders ontologyService={ontologyService}>
-      <SponsorsLogos />
       <TeliStandardLayout appName={APP_CONFIG_JSON.app_name} beta={true}>
         <div className="relative h-full">
           <ErrorNotification />

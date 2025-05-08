@@ -26,13 +26,3 @@ const Assessments = () => {
 };
 
 export default Assessments;
-
-Assessments.defaultProps = {
-  selectedTypes: [],
-  setSelectedTypes: () => {},
-};
-
-Assessments.propTypes = {
-  selectedTypes: PropTypes.arrayOf(PropTypes.string),
-  setSelectedTypes: PropTypes.func,
-};

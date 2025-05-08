@@ -13,20 +13,19 @@ import {
 import * as mapUtils from "../map-utils";
 import PointAssets from "../PointAssets";
 
-const getLineStringFeatures = (feature) => feature.geometry.type === "LineString";
-const getPointFeatures = (feature) => feature.geometry.type === "Point";
-
-const renderPointAssets = (pointAssetProps) => {
-  return renderWithQueryClient(<PointAssets {...pointAssetProps} />, {
-    wrapper: DSProvidersWrapper,
-  });
-};
-
 describe("Point asset component", () => {
+
+  const getLineStringFeatures = (feature) => feature.geometry.type === "LineString";
+  const getPointFeatures = (feature) => feature.geometry.type === "Point";
+
+  const renderPointAssets = (pointAssetProps) => {
+    return renderWithQueryClient(<PointAssets {...pointAssetProps} />, {
+      wrapper: DSProvidersWrapper,
+    });
+  };
   test("should generate empty features when there are no elements", () => {
     const spyOnGeneratePointAssetFeatures = jest.spyOn(mapUtils, "generatePointAssetFeatures");
     renderPointAssets();
-
     expect(spyOnGeneratePointAssetFeatures).toHaveReturnedWith([]);
   });
 

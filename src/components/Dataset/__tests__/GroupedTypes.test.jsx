@@ -1,5 +1,5 @@
 import { screen, render, waitFor } from "@testing-library/react";
-import { rest } from "msw";
+import { http, rest } from "msw";
 import userEvent from "@testing-library/user-event";
 
 import {
@@ -56,7 +56,7 @@ const renderGroupedTypes = ({ types, setSelectedTypes, selectedTypes }) => {
 describe.skip("GroupedTypes component", () => {
   test("renders error message when assessments/assets api call fails", async () => {
     const mockSetSelectedTypes = jest.fn();
-    server.use(rest.get(ASSESSMENTS_ASSETS_ENDPOINT, mockError));
+    server.use(http.get(ASSESSMENTS_ASSETS_ENDPOINT, mockError));
     renderGroupedTypes({
       types: [
         {
@@ -79,7 +79,7 @@ describe.skip("GroupedTypes component", () => {
 
   test("renders error message when assessments/dependencies api call fails", async () => {
     const mockSetSelectedTypes = jest.fn();
-    server.use(rest.get(ASSESSMENTS_DEPENDENCIES_ENDPOINT, mockError));
+    server.use(http.get(ASSESSMENTS_DEPENDENCIES_ENDPOINT, mockError));
     renderGroupedTypes({
       types: [
         {
@@ -101,7 +101,7 @@ describe.skip("GroupedTypes component", () => {
   });
 
   test.skip("renders error message when assets/:id/parts api call fails", async () => {
-    server.use(rest.get("/assets/:id/parts", mockError));
+    server.use(http.get("/assets/:id/parts", mockError));
     renderGroupedTypes({
       types: [
         {

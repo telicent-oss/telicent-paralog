@@ -30,9 +30,9 @@ const FloatingPanel = ({
 
 export default FloatingPanel;
 
-FloatingPanel.defaultProps = {
-  show: true,
-};
+// FloatingPanel.defaultProps = {
+//   show: true,
+// };
 FloatingPanel.propTypes = {
   show: PropTypes.bool,
   position: PropTypes.string,

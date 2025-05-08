@@ -1,4 +1,5 @@
 import { isEmpty } from "lodash";
+import { HttpResponse } from "msw";
 
 export const V013_RESIDENCES = [
   {
@@ -18,15 +19,18 @@ export const V013_RESIDENCES = [
 ];
 
 const personResidences = (req, res, ctx) => {
-  const personUri = req.url.searchParams.get("personUri");
+  const url = new URL(req.request.url);
+  const personUri = url.searchParams.get("personUri");
   let residences = [];
 
   if (personUri === "https://www.example.com/Instruments%23V013") {
     residences = V013_RESIDENCES;
   }
   if (isEmpty(residences)) {
-    return res(ctx.status(404), ctx.json(`Residences for ${personUri} not found`));
+    return HttpResponse.json(`Residences for ${personUri} not found`, {
+      status: 404,
+    });
   }
-  return res(ctx.status(200), ctx.json(residences));
+  return HttpResponse.json(residences, { status: 200 });
 };
 export default personResidences;

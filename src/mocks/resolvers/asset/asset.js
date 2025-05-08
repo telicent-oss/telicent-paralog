@@ -1,3 +1,5 @@
+import { HttpResponse } from "msw";
+
 const assets = [
   {
     uri: "https://www.example.com/Instruments#E001",
@@ -98,11 +100,15 @@ const assets = [
     dependentCriticalitySum: 14,
   },
 ];
-const asset = (req, res, ctx) => {
-  const assetUri = req.url.searchParams.get("assetUri");
+const asset = (req) => {
+  const url = new URL(req.request.url);
+  const assetUri = url.searchParams.get("assetUri");
   const asset = assets.find((asset) => asset.uri === assetUri);
-  if (asset) return res(ctx.status(200), ctx.json(asset));
-  return res(ctx.status(404), ctx.json({ detail: `Details for ${assetUri} not found` }));
+  if (asset) return HttpResponse.json(asset, { status: 200 });
+  return HttpResponse.json(
+    { detail: `Details for ${assetUri} not found` },
+    { status: 404 },
+  );
 };
 
 export default asset;

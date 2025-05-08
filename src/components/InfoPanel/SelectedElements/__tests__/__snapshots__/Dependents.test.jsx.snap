@@ -1,7 +1,7 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Dependents component can toggle dependents assets: dependents list 1`] = `
-Array [
+exports[`Dependents component > can toggle dependents assets > dependents list 1`] = `
+[
   <li
     class="items-center p-2 rounded-md gap-x-2 bg-black-300"
   >
@@ -181,8 +181,8 @@ Array [
 ]
 `;
 
-exports[`Dependents component renders error message when one or more dependents returns an error: dependents with error(s) 1`] = `
-Array [
+exports[`Dependents component > renders error message when one or more dependents returns an error > dependents with error(s) 1`] = `
+[
   <li
     class="items-center p-2 rounded-md gap-x-2 bg-black-300"
   >

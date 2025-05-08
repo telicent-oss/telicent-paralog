@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -e
+
+# Check if syft is installed
+if ! command -v jq &>/dev/null; then
+  echo "Please install jq before running."
+  echo " - macOS: brew install jq"
+fi
+
+
+if [ -f app.config.json ]; then
+  APP_CONFIG_JSON=./app.config.json;
+  # Idea: only have app.config.json in one place
+elif [ -f ./src/app.config.json ]; then
+  APP_CONFIG_JSON=./src/app.config.json;
+else
+  echo "ERROR: could not find app.config.json";
+  exit 1;
+fi
+  
+# Vars for sensible names of builds, artifacts etc
+app_name="$(cat $APP_CONFIG_JSON | jq --raw-output .app_name )"
+repo_name="$(cat $APP_CONFIG_JSON | jq --raw-output .repo_name )"
+uri_basename="$(cat $APP_CONFIG_JSON | jq --raw-output .uri_basename )"

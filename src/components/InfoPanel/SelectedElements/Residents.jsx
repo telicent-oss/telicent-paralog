@@ -54,10 +54,10 @@ const Residents = ({ isAsset, assetUri, primaryType }) => {
 };
 
 export default Residents;
-Residents.defaultProps = {
-  primaryType: undefined,
-  assetUri: undefined,
-};
+// Residents.defaultProps = {
+//   primaryType: undefined,
+//   assetUri: undefined,
+// };
 Residents.propTypes = {
   isAsset: PropTypes.bool.isRequired,
   primaryType: PropTypes.string,

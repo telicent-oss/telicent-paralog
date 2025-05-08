@@ -1,38 +1,51 @@
-# #!/usr/bin/env bash
+#!/usr/bin/env bash
 set -e
-pwd
-trap 'rm -f ./instance.sbom.json' EXIT
-echo '{}' > ./instance.sbom.json
 
-echo "Found .npmrc at: $npmrc_path"
+source ./scripts/utils.app-config-json
+# Note: The above sets:
+# - $app_name
+# - $repo_name
+# - $image_sbom_json
 
-NPM_TOKEN=$(UNMASK=true yarn --silent tefe npmrc-authtoken //npm.pkg.github.com/)
+source ./scripts/utils.docker-image-names
+# Note: The above sets:
+# - $image_run 
 
-if [[ -z "$NPM_TOKEN" ]]; then
+#app_sbom_json="$app_name.sbom.json"
+
+
+# Setup trap to handle all script terminations
+cleanup() {
+  rm -f "./${app_name}.sbom.json"
+}
+trap cleanup EXIT
+echo "{}" > "./${app_name}.sbom.json"
+
+trivy image --download-db-only
+
+export FONT_AWESOME_TOKEN=$(UNMASK=true yarn --silent tefe npmrc-authtoken //npm.fontawesome.com/)
+if [[ -z "$FONT_AWESOME_TOKEN" ]]; then
   echo "Necessary tokens not found in .npmrc, cannot proceed with build."
   exit 1
 fi
+if [[ -z "$app_name" || -z "$repo_name" ]]; then
+  echo "Necessary config found, cannot proceed with build."
+  exit 1
+fi
 
-# Modify Docker build to use tokens
-# To debug it helps to use:  --no-cache \
+echo "APP_NAME=$app_name"
 
+yarn install
+yarn build
+yarn postbuild
 
-
+echo "image_run: $image_run"
 docker build \
     --no-cache \
     --progress=plain \
-    -f Dockerfile.build \
-    --build-arg NPM_TOKEN="$NPM_TOKEN" \
-    -t telicent-paralog-intermediate \
-    --load . \
-    && \
-    docker build \
-    --no-cache \
-    --progress=plain \
     -f Dockerfile \
-    --build-arg BASE_IMAGE=telicent-paralog-intermediate \
-    --build-arg APP_NAME=telicent-paralog \
-    -t telicent-paralog-local \
-    --load . \
-    && \
-    docker images | grep telicent-paralog-local
+    -t "$image_run" \
+    --build-arg APP_NAME="$app_name" \
+    --load .;
+
+./scripts/utils.scan "$image_run";

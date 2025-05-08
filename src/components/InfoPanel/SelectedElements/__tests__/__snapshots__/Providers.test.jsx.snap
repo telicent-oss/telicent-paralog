@@ -1,7 +1,7 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Providers component can toggle providers assets: providers list 1`] = `
-Array [
+exports[`Providers component > can toggle providers assets > providers list 1`] = `
+[
   <li
     class="items-center p-2 rounded-md gap-x-2 bg-black-300"
   >
@@ -93,8 +93,8 @@ Array [
 ]
 `;
 
-exports[`Providers component renders error message when one or more providers returns an error: providers with error(s) 1`] = `
-Array [
+exports[`Providers component > renders error message when one or more providers returns an error > providers with error(s) 1`] = `
+[
   <li
     class="items-center p-2 rounded-md gap-x-2 bg-black-300"
   >

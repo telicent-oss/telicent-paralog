@@ -1,4 +1,5 @@
 import { render, screen, within } from "@testing-library/react";
+import { vi } from "vitest";
 import userEvent from "@testing-library/user-event";
 import React, { useContext } from "react";
 import { CytoscapeContext, CytoscapeProvider } from "../../context";
@@ -8,7 +9,9 @@ const user = userEvent.setup();
 
 const ToolbarTestComponent = ({ cyRef }) => {
   const { layout, updateLayout } = useContext(CytoscapeContext);
-  return <Toolbar cyRef={cyRef} graphLayout={layout} setGraphLayout={updateLayout} />;
+  return (
+    <Toolbar cyRef={cyRef} graphLayout={layout} setGraphLayout={updateLayout} />
+  );
 };
 
 describe("GraphToolbar component", () => {
@@ -21,9 +24,9 @@ describe("GraphToolbar component", () => {
 
     await user.click(layoutBtn);
 
-    const secondaryMenuItems = within(screen.getByTestId("secondary-menu")).getAllByRole(
-      "listitem"
-    );
+    const secondaryMenuItems = within(
+      screen.getByTestId("secondary-menu"),
+    ).getAllByRole("listitem");
     expect(secondaryMenuItems).toHaveLength(6);
     expect(secondaryMenuItems).toMatchSnapshot("layout options");
   });
@@ -32,33 +35,35 @@ describe("GraphToolbar component", () => {
     render(<ToolbarTestComponent />, { wrapper: CytoscapeProvider });
     await user.click(screen.getByRole("button", { name: /layout/i }));
 
-    const secondaryMenuItems = within(screen.getByTestId("secondary-menu")).getAllByRole(
-      "listitem"
-    );
-    expect(within(secondaryMenuItems[0]).getByRole("button", { name: "Cola" })).toHaveClass(
-      "bg-black-500"
-    );
+    const secondaryMenuItems = within(
+      screen.getByTestId("secondary-menu"),
+    ).getAllByRole("listitem");
+    expect(
+      within(secondaryMenuItems[0]).getByRole("button", { name: "Cola" }),
+    ).toHaveClass("bg-black-500");
   });
 
   test("renders updated graph layout", async () => {
     render(<ToolbarTestComponent />, { wrapper: CytoscapeProvider });
     await user.click(screen.getByRole("button", { name: /layout/i }));
 
-    const secondaryMenuItems = within(screen.getByTestId("secondary-menu")).getAllByRole(
-      "listitem"
+    const secondaryMenuItems = within(
+      screen.getByTestId("secondary-menu"),
+    ).getAllByRole("listitem");
+    await user.click(
+      within(secondaryMenuItems[1]).getByRole("button", { name: "Grid" }),
     );
-    await user.click(within(secondaryMenuItems[1]).getByRole("button", { name: "Grid" }));
 
-    expect(within(secondaryMenuItems[1]).getByRole("button", { name: "Grid" })).toHaveClass(
-      "bg-black-500"
-    );
-    expect(within(secondaryMenuItems[0]).getByRole("button", { name: "Cola" })).not.toHaveClass(
-      "bg-black-500"
-    );
+    expect(
+      within(secondaryMenuItems[1]).getByRole("button", { name: "Grid" }),
+    ).toHaveClass("bg-black-500");
+    expect(
+      within(secondaryMenuItems[0]).getByRole("button", { name: "Cola" }),
+    ).not.toHaveClass("bg-black-500");
   });
 
   test("pans and zooms the graph to fit", async () => {
-    const mockFit = jest.fn();
+    const mockFit = vi.fn();
     const cy = { current: { fit: mockFit } };
     render(<ToolbarTestComponent cyRef={cy} />, { wrapper: CytoscapeProvider });
 
@@ -71,7 +76,7 @@ describe("GraphToolbar component", () => {
   });
 
   test("pans the graph to the centre", async () => {
-    const mockCenter = jest.fn();
+    const mockCenter = vi.fn();
     const cy = { current: { center: mockCenter } };
     render(<ToolbarTestComponent cyRef={cy} />, { wrapper: CytoscapeProvider });
 
@@ -84,13 +89,14 @@ describe("GraphToolbar component", () => {
   });
 
   test("exports current graph view as png", async () => {
-    const mockPng = jest.fn();
-    const mockRevokeObjectURL = jest.fn();
-    const href = "blob:http://localhost:3001/eb1bb2f8-9e7d-4157-9418-cafe78aba65a";
+    const mockPng = vi.fn();
+    const mockRevokeObjectURL = vi.fn();
+    const href =
+      "blob:http://localhost:3001/eb1bb2f8-9e7d-4157-9418-cafe78aba65a";
     const cy = { current: { png: mockPng } };
-    global.window.URL.createObjectURL = jest.fn().mockReturnValue(href);
+    global.window.URL.createObjectURL = vi.fn().mockReturnValue(href);
     global.window.URL.revokeObjectURL = mockRevokeObjectURL;
-    HTMLAnchorElement.prototype.click = jest.fn();
+    HTMLAnchorElement.prototype.click = vi.fn();
     render(<ToolbarTestComponent cyRef={cy} />, { wrapper: CytoscapeProvider });
 
     const exportBtn = screen.getByRole("button", { name: /export/i });

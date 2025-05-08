@@ -1,16 +1,16 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Point asset component should NOT generate features for selected elements which don't exist 1`] = `
-Array [
-  Object {
-    "geometry": Object {
-      "coordinates": Array [
+exports[`Point asset component > should NOT generate features for selected elements which don't exist 1`] = `
+[
+  {
+    "geometry": {
+      "coordinates": [
         -1231231,
         1.111111,
       ],
       "type": "Point",
     },
-    "properties": Object {
+    "properties": {
       "criticality": 2,
       "id": "E003",
       "type": "http://ies.example.com/ontology/ies#LargeWindFarm",
@@ -18,15 +18,15 @@ Array [
     },
     "type": "Feature",
   },
-  Object {
-    "geometry": Object {
-      "coordinates": Array [
+  {
+    "geometry": {
+      "coordinates": [
         100.098765,
         1.555555,
       ],
       "type": "Point",
     },
-    "properties": Object {
+    "properties": {
       "criticality": 2,
       "id": "E025",
       "type": "http://ies.example.com/ontology/ies#LargeWindFarm",
@@ -37,17 +37,17 @@ Array [
 ]
 `;
 
-exports[`Point asset component should generate asset features 1`] = `
-Array [
-  Object {
-    "geometry": Object {
-      "coordinates": Array [
+exports[`Point asset component > should generate asset features 1`] = `
+[
+  {
+    "geometry": {
+      "coordinates": [
         -1231231,
         1.111111,
       ],
       "type": "Point",
     },
-    "properties": Object {
+    "properties": {
       "criticality": 2,
       "id": "E003",
       "type": "http://ies.example.com/ontology/ies#LargeWindFarm",
@@ -55,15 +55,15 @@ Array [
     },
     "type": "Feature",
   },
-  Object {
-    "geometry": Object {
-      "coordinates": Array [
+  {
+    "geometry": {
+      "coordinates": [
         10.1233333,
         100.123123,
       ],
       "type": "Point",
     },
-    "properties": Object {
+    "properties": {
       "criticality": 1,
       "id": "E001",
       "type": "http://ies.example.com/ontology/ies#CoalPlantComplex",
@@ -74,23 +74,23 @@ Array [
 ]
 `;
 
-exports[`Point asset component should generate dependency features 1`] = `
-Array [
-  Object {
-    "geometry": Object {
-      "coordinates": Array [
-        Array [
+exports[`Point asset component > should generate dependency features 1`] = `
+[
+  {
+    "geometry": {
+      "coordinates": [
+        [
           10.1233333,
           100.123123,
         ],
-        Array [
+        [
           -1231231,
           1.111111,
         ],
       ],
       "type": "LineString",
     },
-    "properties": Object {
+    "properties": {
       "criticality": 2,
       "dependent": "https://www.example.com/Instruments#E001",
       "id": "E001 - E003",
@@ -102,15 +102,15 @@ Array [
     },
     "type": "Feature",
   },
-  Object {
-    "geometry": Object {
-      "coordinates": Array [
+  {
+    "geometry": {
+      "coordinates": [
         -1231231,
         1.111111,
       ],
       "type": "Point",
     },
-    "properties": Object {
+    "properties": {
       "criticality": 2,
       "id": "E003",
       "type": "http://ies.example.com/ontology/ies#LargeWindFarm",
@@ -118,15 +118,15 @@ Array [
     },
     "type": "Feature",
   },
-  Object {
-    "geometry": Object {
-      "coordinates": Array [
+  {
+    "geometry": {
+      "coordinates": [
         10.1233333,
         100.123123,
       ],
       "type": "Point",
     },
-    "properties": Object {
+    "properties": {
       "criticality": 1,
       "id": "E001",
       "type": "http://ies.example.com/ontology/ies#CoalPlantComplex",
