@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.3.0](https://github.com/telicent-oss/telicent-paralog/compare/v1.2.0...v1.3.0) (2025-05-08)
+
+
+### Features
+
+* migrate to vite ([2ff7621](https://github.com/telicent-oss/telicent-paralog/commit/2ff76216c65d4461f18e37ceb28a9e9389731a1e))
+
+
+### Bug Fixes
+
+* pr changes ([a0224cb](https://github.com/telicent-oss/telicent-paralog/commit/a0224cb2061c07b813bd5c452da8500267704288))
+* refactor app ([974267c](https://github.com/telicent-oss/telicent-paralog/commit/974267c1451e31d2d406fd36ed79a75b86fd7249))
+* remove .only from test ([f330529](https://github.com/telicent-oss/telicent-paralog/commit/f3305293dda6fd62ff8ab199a06cc592fb7034be))
+* update CVE's ([b3a0c26](https://github.com/telicent-oss/telicent-paralog/commit/b3a0c261cd3c59a8eff1f2f4ab2303ad9c95a33c))
+* update to new docker build workflow ([ce42e30](https://github.com/telicent-oss/telicent-paralog/commit/ce42e3019af7e1e82b32b6589a5fea33f788f96d))
+* update to new docker build workflow ([4606478](https://github.com/telicent-oss/telicent-paralog/commit/46064783e262347ac92356ed0444dfcb3e91c9f5))
+* update yarn.lock ([59d6c9c](https://github.com/telicent-oss/telicent-paralog/commit/59d6c9c660547997aab6ab0b54d4756e093b3a15))
+* use public FA ([d0cdd56](https://github.com/telicent-oss/telicent-paralog/commit/d0cdd56b140d2f84a33c92089ea4977e339f0163))
+
 ## [1.2.0](https://github.com/telicent-oss/telicent-paralog/compare/v1.1.0...v1.2.0) (2025-03-14)
 
 
