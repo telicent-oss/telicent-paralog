@@ -72,6 +72,7 @@ export default defineConfig(({ mode }) => {
       exclude: ["mapbox-gl"],
     },
     build: {
+      outDir: "build",
       rollupOptions: {
         external: ["mapbox-gl"],
       },
