@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.4](https://github.com/telicent-oss/telicent-paralog/compare/v1.3.3...v1.3.4) (2025-05-09)
+
+
+### Bug Fixes
+
+* ensure config files aren't bundled at build time ([#21](https://github.com/telicent-oss/telicent-paralog/issues/21)) ([09e640a](https://github.com/telicent-oss/telicent-paralog/commit/09e640a3112eb07a86acc9e0bb93bd304706a248))
+
 ## [1.3.3](https://github.com/telicent-oss/telicent-paralog/compare/v1.3.2...v1.3.3) (2025-05-08)
 
 
