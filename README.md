@@ -31,7 +31,7 @@ and ensure the Smart Cache is running prior to starting the frontend application
   ```
 - Edit: `env-config.js` and `sensitive/secret-config.js`(_gitignored_)
   > **Note:** In local, these files are copied to `./public`
-3. Run `yarn start` to start the application
+3. Run `yarn dev` to start the application
 
 
 ## Features
