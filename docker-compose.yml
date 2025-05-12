@@ -1,11 +1,9 @@
 services:
   paralog-ui:
-    environment:
-      API_URL: http://localhost:8000
-      BETA: true
-      ONTOLOGY_API_URL: http://localhost:5007
-      MAP_TILER_TOKEN: AgCsD3bXojrU2bAN3cVe
-    image: telicent-paralog-run-local
+    image: telicent/telicent-paralog
+    volumes: 
+      - ./public/env-config.js:/usr/local/nginx/html/env-config.js
+      - ./public/secret-config.js:/usr/local/nginx/html/secret-config.js
     ports:
       - mode: ingress
         target: "8080"  
@@ -17,12 +15,8 @@ services:
     environment:
       JENA_DATASET: knowledge
       JENA_PORT: 3030
-      JENA_URL: triplestore
+      JENA_URL: host.docker.internal
       PORT: 4001
     ports:
       - "4001:8000"
     restart: on-failure
-  triplestore:
-    image: daxid/parliament-triplestore 
-    ports:
-      - "3030:8089"
