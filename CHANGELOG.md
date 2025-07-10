@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.5](https://github.com/telicent-oss/telicent-paralog/compare/v1.3.4...v1.3.5) (2025-07-10)
+
+
+### Bug Fixes
+
+* **test-feature-branch.yml:** add  workflow_dispatch ([#24](https://github.com/telicent-oss/telicent-paralog/issues/24)) ([2840880](https://github.com/telicent-oss/telicent-paralog/commit/2840880388b0bae854b21bc9d5a64c85aa64da35))
+
 ## [1.3.4](https://github.com/telicent-oss/telicent-paralog/compare/v1.3.3...v1.3.4) (2025-05-09)
 
 
